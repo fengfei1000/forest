@@ -27,4 +27,18 @@ public enum SliceAlgorithmType {
 	public static SliceAlgorithmType valueOf(int value) {
 		return cache.get(value);
 	}
+
+	public static SliceAlgorithmType find(String name) {
+		if (name == null || "".equals(name)) {
+			return null;
+		}
+		SliceAlgorithmType[] fs = values();
+		for (SliceAlgorithmType enumType : fs) {
+			if (enumType.name().equalsIgnoreCase(name)) {
+				return enumType;
+			}
+
+		}
+		throw new IllegalArgumentException("Non-exist the enum type,error arg name:" + name);
+	}
 }

@@ -5,6 +5,7 @@
 		</plotterClass>
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>
+		<algorithmType></algorithmType>
 		<unitSuffix>_</unitSuffix>
 		<defaultExtraInfo>
 			<property key="host" value="127.0.0.1" />

@@ -12,6 +12,7 @@ import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 
 import fengfei.forest.slice.OverType;
+import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroupType;
 import fengfei.forest.slice.NavigableSliceGroup.NavigationType;
 import fengfei.forest.slice.config.FunctionType;
@@ -32,6 +33,8 @@ public class GroupConfig {
 	protected String funcType;
 	@Element(required = false)
 	protected String navigationType = NavigationType.Floor.name();
+	@Element(required = false)
+	protected String algorithmType = SliceAlgorithmType.Loop.name();
 	@ElementMap(attribute = true, key = "key", value = "value")
 	private Map<String, String> defaultExtraInfo = new HashMap<>();
 	@ElementList(name = "slices")
@@ -56,6 +59,10 @@ public class GroupConfig {
 
 	public FunctionType getFunctionType() {
 		return FunctionType.find(funcType);
+	}
+
+	public SliceAlgorithmType getSliceAlgorithmType() {
+		return SliceAlgorithmType.find(algorithmType);
 	}
 
 	public List<SliceConfig> getSlices() {
@@ -100,7 +107,7 @@ public class GroupConfig {
 
 	@Override
 	public String toString() {
-		return "\n	GroupConfig [id=" + id + ", plotterClass=" + plotterClass + ", type=" + type + ", over=" + over + ", unitSuffix=" + unitSuffix + ",\n	defaultExtraInfo=" + defaultExtraInfo + ", \n	slices=" + slices + "]";
+		return "\n	GroupConfig [id=" + id + ", plotterClass=" + plotterClass + ", SliceGroupType=" + type + ", SliceAlgorithmType=" + algorithmType + ", over=" + over + ", unitSuffix=" + unitSuffix + ",\n	defaultExtraInfo=" + defaultExtraInfo + ", \n	slices=" + slices + "]";
 	}
 
 }

@@ -44,6 +44,7 @@ class LogicalSliceFactory {
 				throw new IllegalArgumentException("Can't support agr.");
 			}
 		}
+		logicalSlice.setAlgorithmType(group.getSliceAlgorithmType());
 		GroupConfig subGroup = sliceConfig.getSubGroup();
 		if (subGroup != null) {
 			SliceGroup<Source> sliceGroup = sliceGroupFactory.create(subGroup);
