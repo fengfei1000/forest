@@ -1,0 +1,25 @@
+{
+    "partitions":[
+        {
+            "sourceKey":0,
+            "unitSuffix":"_1",
+            "name":"127.0.0.1",
+            "subPatitions":null
+        },
+        {
+            "sourceKey":400,
+            "unitSuffix":"_1",
+            "name":"127.0.0.1",
+            "subPatitions":null
+        },
+        {
+            "sourceKey":800,
+            "unitSuffix":"_1",
+            "name":"127.0.0.1",
+            "subPatitions":null
+        }
+    ],
+    "over":"Last",
+    "name":"unit1",
+    "type":"Range"
+}
