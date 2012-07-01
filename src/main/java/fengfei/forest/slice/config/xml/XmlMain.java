@@ -19,10 +19,10 @@ public class XmlMain {
 		Serializer serializer = new Persister();
 		InputStream in = XmlMain.class.getClassLoader().getResourceAsStream(
 				"config/config.xml");
-		// System.out.println(in);
+ 
 
 		Config config = serializer.read(Config.class, in, false);
-		 System.out.println(config);
+		System.out.println(config);
 		in.close();
 		SliceGroupFactory factory = new SliceGroupFactory();
 		factory.config(config);

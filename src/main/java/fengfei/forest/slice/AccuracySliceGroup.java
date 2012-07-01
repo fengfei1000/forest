@@ -28,7 +28,7 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 	public Slice getAny(Source key) {
 		long id = plotter.get(key);
 		LogicalSlice<Source> logicSlice = slices.get(id);
-		//System.out.println(logicSlice);
+		// System.out.println(logicSlice);
 		if (logicSlice == null) {
 			throw new NonExistedSliceException("id=" + id + " non-existed.");
 		}

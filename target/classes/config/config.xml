@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Units>
 	<group id="unit1" type="Accuracy">
-		<plotterClass value="fowthorn.xx.bamboo.slice.impl.LongSlicePlotter" />
+		<plotterClass>fengfei.forest.slice.impl.LongSlicePlotter
+		</plotterClass>
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>
 		<unitSuffix>_</unitSuffix>
@@ -33,7 +34,7 @@
 		</slices>
 	</group>
 	<group id="unit2" type="Accuracy">
-		<plotterClass>fowthorn.xx.bamboo.slice.impl.LongSlicePlotter
+		<plotterClass>fengfei.forest.slice.impl.LongSlicePlotter
 		</plotterClass>
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>
