@@ -1,13 +1,22 @@
-package fengfei.forest.slice;
+package fengfei.forest.slice.impl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import fengfei.forest.slice.Function;
+import fengfei.forest.slice.LogicalSlice;
+import fengfei.forest.slice.Slice;
+import fengfei.forest.slice.SliceGroup;
+import fengfei.forest.slice.SlicePlotter;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 
 public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 
 	protected Map<Long, LogicalSlice<Source>> slices = new ConcurrentHashMap<>();
+
+	public AccuracySliceGroup() {
+		super();
+	}
 
 	public AccuracySliceGroup(SlicePlotter<Source> plotter) {
 		super(plotter);

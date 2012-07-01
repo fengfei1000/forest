@@ -1,9 +1,14 @@
-package fengfei.forest.slice;
+package fengfei.forest.slice.impl;
 
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
+import fengfei.forest.slice.Function;
+import fengfei.forest.slice.LogicalSlice;
+import fengfei.forest.slice.Slice;
+import fengfei.forest.slice.SliceGroup;
+import fengfei.forest.slice.SlicePlotter;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 
 public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
@@ -49,6 +54,10 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 	// TreeMap<>();
 	protected NavigableMap<Long, LogicalSlice<Source>> slices = new ConcurrentSkipListMap<>();
 	protected NavigationType defaultNavigationType = NavigationType.Floor;
+
+	public NavigableSliceGroup() {
+		super();
+	}
 
 	public NavigableSliceGroup(SlicePlotter<Source> plotter) {
 		super(plotter);

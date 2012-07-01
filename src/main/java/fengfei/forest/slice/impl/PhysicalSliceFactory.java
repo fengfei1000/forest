@@ -1,5 +1,7 @@
-package fengfei.forest.slice;
+package fengfei.forest.slice.impl;
 
+import fengfei.forest.slice.Function;
+import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.config.SliceKind;
 import fengfei.forest.slice.config.xml.SliceConfig;

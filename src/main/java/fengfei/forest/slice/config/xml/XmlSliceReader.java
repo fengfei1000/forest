@@ -9,9 +9,9 @@ import org.simpleframework.xml.core.Persister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fengfei.forest.slice.SliceGroupFactory;
 import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.exception.ErrorSliceConfigException;
+import fengfei.forest.slice.impl.SliceGroupFactory;
 
 public class XmlSliceReader implements SliceReader<SliceGroupFactory> {
 

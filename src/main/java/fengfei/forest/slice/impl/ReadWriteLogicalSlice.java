@@ -1,4 +1,9 @@
-package fengfei.forest.slice;
+package fengfei.forest.slice.impl;
+
+import fengfei.forest.slice.Function;
+import fengfei.forest.slice.LogicalSlice;
+import fengfei.forest.slice.Slice;
+import fengfei.forest.slice.SliceAlgorithmType;
 
 public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 

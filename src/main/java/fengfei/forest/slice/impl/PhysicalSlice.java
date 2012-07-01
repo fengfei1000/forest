@@ -1,4 +1,7 @@
-package fengfei.forest.slice;
+package fengfei.forest.slice.impl;
+
+import fengfei.forest.slice.Function;
+import fengfei.forest.slice.Slice;
 
 public class PhysicalSlice extends Slice {
 

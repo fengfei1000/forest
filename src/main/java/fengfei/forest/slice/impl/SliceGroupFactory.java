@@ -1,15 +1,20 @@
-package fengfei.forest.slice;
+package fengfei.forest.slice.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fengfei.forest.slice.NavigableSliceGroup.NavigationType;
+import fengfei.forest.slice.LogicalSlice;
+import fengfei.forest.slice.SliceGroup;
+import fengfei.forest.slice.SliceGroupType;
+import fengfei.forest.slice.SlicePlotter;
 import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.config.xml.Config;
 import fengfei.forest.slice.config.xml.GroupConfig;
 import fengfei.forest.slice.config.xml.SliceConfig;
+import fengfei.forest.slice.exception.NonExistedSliceException;
+import fengfei.forest.slice.impl.NavigableSliceGroup.NavigationType;
 
 public class SliceGroupFactory {
 
@@ -24,12 +29,19 @@ public class SliceGroupFactory {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	<Source> SliceGroup<Source> create(GroupConfig group) {
 		SliceGroupType type = group.getSliceGroupType();
 		String plotterClass = group.getPlotterClass();
 
 		SliceGroup<Source> sliceGroup = null;
-		SlicePlotter<Source> plotter = newInstance(plotterClass);
+		SlicePlotter<Source> plotter = null;
+		if (plotterClass == null || "".equals(plotterClass)) {
+			plotter = (SlicePlotter<Source>) new LongSlicePlotter();
+		} else {
+			plotter = newInstance(plotterClass);
+		}
+
 		switch (type) {
 		case Navigable:
 			sliceGroup = new NavigableSliceGroup<>(plotter);
@@ -127,6 +139,24 @@ public class SliceGroupFactory {
 			sliceGroup = create(group);
 			sliceGroupCache.put(group.getId(), sliceGroup);
 		}
+		return sliceGroup;
+
+	}
+
+	public <Source> SliceGroup<Source> getSliceGroup(
+			SlicePlotter<Source> plotter,
+			String unitName) {
+		@SuppressWarnings("unchecked")
+		SliceGroup<Source> sliceGroup = (SliceGroup<Source>) sliceGroupCache.get(unitName);
+		if (sliceGroup == null) {
+			GroupConfig group = groupConfigCache.get(unitName);
+			sliceGroup = create(group);
+			sliceGroupCache.put(group.getId(), sliceGroup);
+		}
+		if (sliceGroup == null) {
+			throw new NonExistedSliceException("unitName=" + unitName);
+		}
+		sliceGroup.setPlotter(plotter);
 		return sliceGroup;
 
 	}

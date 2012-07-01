@@ -1,8 +1,11 @@
-package fengfei.forest.slice;
+package fengfei.forest.slice.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import fengfei.forest.slice.HashAlgorithms;
+import fengfei.forest.slice.Slice;
 
 public abstract class SliceModel {
 

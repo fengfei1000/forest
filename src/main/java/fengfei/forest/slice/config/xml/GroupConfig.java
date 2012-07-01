@@ -14,8 +14,8 @@ import org.simpleframework.xml.Root;
 import fengfei.forest.slice.OverType;
 import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroupType;
-import fengfei.forest.slice.NavigableSliceGroup.NavigationType;
 import fengfei.forest.slice.config.FunctionType;
+import fengfei.forest.slice.impl.NavigableSliceGroup.NavigationType;
 
 @Root(name = "group", strict = false)
 public class GroupConfig {

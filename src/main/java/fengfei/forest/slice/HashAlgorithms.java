@@ -1,24 +1,7 @@
 package fengfei.forest.slice;
 
-/**
- * Hash�㷨��ȫ<br>
- * �Ƽ�ʹ��FNV1�㷨
- * 
- * @algorithm None
- * @author Goodzzp 2006-11-20
- * @lastEdit Goodzzp 2006-11-20
- * @editDetail Create
- */
 public class HashAlgorithms {
-	/**
-	 * �ӷ�hash
-	 * 
-	 * @param key
-	 *            �ַ�
-	 * @param prime
-	 *            һ������
-	 * @return hash���
-	 */
+
 	public static int additiveHash(String key, int prime) {
 		int hash, i;
 		for (hash = key.length(), i = 0; i < key.length(); i++)
@@ -26,15 +9,6 @@ public class HashAlgorithms {
 		return (hash % prime);
 	}
 
-	/**
-	 * ��תhash
-	 * 
-	 * @param key
-	 *            �����ַ�
-	 * @param prime
-	 *            ����
-	 * @return hashֵ
-	 */
 	public static int rotatingHash(String key, int prime) {
 		int hash, i;
 		for (hash = key.length(), i = 0; i < key.length(); ++i)
@@ -43,22 +17,8 @@ public class HashAlgorithms {
 		// return (hash ^ (hash>>10) ^ (hash>>20));
 	}
 
-	// ���
-	// ʹ�ã�hash = (hash ^ (hash>>10) ^ (hash>>20)) & mask;
-	// ���hash %= prime;
-
-	/**
-	 * MASKֵ�������һ��ֵ�����������
-	 */
 	static int M_MASK = 0x8765fed1;
 
-	/**
-	 * һ��һ��hash
-	 * 
-	 * @param key
-	 *            �����ַ�
-	 * @return ���hashֵ
-	 */
 	public static int oneByOneHash(String key) {
 		int hash, i;
 		for (hash = 0, i = 0; i < key.length(); ++i) {
@@ -73,15 +33,6 @@ public class HashAlgorithms {
 		return hash;
 	}
 
-	/**
-	 * Bernstein's hash
-	 * 
-	 * @param key
-	 *            �����ֽ�����
-	 * @param level
-	 *            ��ʼhash����
-	 * @return ���hash
-	 */
 	public static int bernstein(String key) {
 		int hash = 0;
 		int i;
@@ -89,26 +40,6 @@ public class HashAlgorithms {
 			hash = 33 * hash + key.charAt(i);
 		return hash;
 	}
-
-	//
-	// // Pearson's Hash
-	// char pearson(char[]key, ub4 len, char tab[256])
-	// {
-	// char hash;
-	// ub4 i;
-	// for (hash=len, i=0; i<len; ++i)
-	// hash=tab[hash^key[i]];
-	// return (hash);
-	// }
-
-	// // CRC Hashing������crc,������������
-	// ub4 crc(char *key, ub4 len, ub4 mask, ub4 tab[256])
-	// {
-	// ub4 hash, i;
-	// for (hash=len, i=0; i<len; ++i)
-	// hash = (hash >> 8) ^ tab[(hash & 0xff) ^ key[i]];
-	// return (hash & mask);
-	// }
 
 	/**
 	 * Universal Hashing
@@ -147,19 +78,8 @@ public class HashAlgorithms {
 		return (hash & mask);
 	}
 
-	// LOOKUP3
-	// ��Bob Jenkins(3).c�ļ�
-
-	// 32λFNV�㷨
 	static int M_SHIFT = 0;
 
-	/**
-	 * 32λ��FNV�㷨
-	 * 
-	 * @param data
-	 *            ����
-	 * @return intֵ
-	 */
 	public static int FNVHash(byte[] data) {
 		int hash = (int) 2166136261L;
 		for (byte b : data)
@@ -169,13 +89,6 @@ public class HashAlgorithms {
 		return (hash ^ (hash >> M_SHIFT)) & M_MASK;
 	}
 
-	/**
-	 * �Ľ��32λFNV�㷨1
-	 * 
-	 * @param data
-	 *            ����
-	 * @return intֵ
-	 */
 	public static int FNVHash1(byte[] data) {
 		final int p = 16777619;
 		int hash = (int) 2166136261L;
@@ -189,13 +102,6 @@ public class HashAlgorithms {
 		return hash;
 	}
 
-	/**
-	 * �Ľ��32λFNV�㷨1
-	 * 
-	 * @param data
-	 *            �ַ�
-	 * @return intֵ
-	 */
 	public static int FNVHash1(String data) {
 		final int p = 16777619;
 		int hash = (int) 2166136261L;
@@ -209,9 +115,6 @@ public class HashAlgorithms {
 		return hash;
 	}
 
-	/**
-	 * Thomas Wang���㷨������hash
-	 */
 	public static int intHash(int key) {
 		key += ~(key << 15);
 		key ^= (key >>> 10);
@@ -222,12 +125,6 @@ public class HashAlgorithms {
 		return key;
 	}
 
-	/**
-	 * RS�㷨hash
-	 * 
-	 * @param str
-	 *            �ַ�
-	 */
 	public static int RSHash(String str) {
 		int b = 378551;
 		int a = 63689;
@@ -241,11 +138,6 @@ public class HashAlgorithms {
 		return (hash & 0x7FFFFFFF);
 	}
 
-	/* End Of RS Hash Function */
-
-	/**
-	 * JS�㷨
-	 */
 	public static int JSHash(String str) {
 		int hash = 1315423911;
 
@@ -256,11 +148,6 @@ public class HashAlgorithms {
 		return (hash & 0x7FFFFFFF);
 	}
 
-	/* End Of JS Hash Function */
-
-	/**
-	 * PJW�㷨
-	 */
 	public static int PJWHash(String str) {
 		int BitsInUnsignedInt = 32;
 		int ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
@@ -280,11 +167,6 @@ public class HashAlgorithms {
 		return (hash & 0x7FFFFFFF);
 	}
 
-	/* End Of P. J. Weinberger Hash Function */
-
-	/**
-	 * ELF�㷨
-	 */
 	public static int ELFHash(String str) {
 		int hash = 0;
 		int x = 0;
@@ -300,11 +182,6 @@ public class HashAlgorithms {
 		return (hash & 0x7FFFFFFF);
 	}
 
-	/* End Of ELF Hash Function */
-
-	/**
-	 * BKDR�㷨
-	 */
 	public static int BKDRHash(String str) {
 		int seed = 131; // 31 131 1313 13131 131313 etc..
 		int hash = 0;
@@ -318,9 +195,6 @@ public class HashAlgorithms {
 
 	/* End Of BKDR Hash Function */
 
-	/**
-	 * SDBM�㷨
-	 */
 	public static int SDBMHash(String str) {
 		int hash = 0;
 
@@ -333,9 +207,6 @@ public class HashAlgorithms {
 
 	/* End Of SDBM Hash Function */
 
-	/**
-	 * DJB�㷨
-	 */
 	public static int DJBHash(String str) {
 		int hash = 5381;
 
@@ -348,9 +219,6 @@ public class HashAlgorithms {
 
 	/* End Of DJB Hash Function */
 
-	/**
-	 * DEK�㷨
-	 */
 	public static int DEKHash(String str) {
 		int hash = str.length();
 
@@ -363,15 +231,12 @@ public class HashAlgorithms {
 
 	/* End Of DEK Hash Function */
 
-	/**
-	 * AP�㷨
-	 */
 	public static int APHash(String str) {
 		int hash = 0;
 
 		for (int i = 0; i < str.length(); i++) {
-			hash ^= ((i & 1) == 0) ? ((hash << 7) ^ str.charAt(i) ^ (hash >> 3))
-					: (~((hash << 11) ^ str.charAt(i) ^ (hash >> 5)));
+			hash ^= ((i & 1) == 0) ? ((hash << 7) ^ str.charAt(i) ^ (hash >> 3)) : (~((hash << 11) ^ str
+					.charAt(i) ^ (hash >> 5)));
 		}
 
 		// return (hash & 0x7FFFFFFF);
@@ -380,9 +245,6 @@ public class HashAlgorithms {
 
 	/* End Of AP Hash Function */
 
-	/**
-	 * JAVA�Լ�����㷨
-	 */
 	public static int java(String str) {
 		int h = 0;
 		int off = 0;
@@ -393,9 +255,6 @@ public class HashAlgorithms {
 		return h;
 	}
 
-	/**
-	 * ���hash�㷨�����64λ��ֵ
-	 */
 	public static long mixHash(String str) {
 		long hash = str.hashCode();
 		hash <<= 32;
