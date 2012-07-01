@@ -4,9 +4,9 @@ import java.io.InputStream;
 
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.SliceGroup;
-import fengfei.forest.slice.SliceGroupFactory;
 import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.config.xml.XmlSliceReader;
+import fengfei.forest.slice.impl.SliceGroupFactory;
 
 public class XmlMain {
 
@@ -21,7 +21,7 @@ public class XmlMain {
 		SliceReader<SliceGroupFactory> reader = new XmlSliceReader();
 		SliceGroupFactory factory = reader.read(in);
 
-		String unitName = "unit2";
+		String unitName = "unit1";
 		SliceGroup<Long> group = factory.getSliceGroup(unitName);
 		// System.out.println(group);
 		System.out.println(group.getAny(1l));
