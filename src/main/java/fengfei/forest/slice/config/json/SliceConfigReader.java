@@ -12,15 +12,16 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.SliceType;
 
-public class SliceConfigReader<T extends SliceConfig> {
+public class SliceConfigReader<T extends SliceConfig> implements SliceReader<T> {
 
 	private Map<String, String> config;
 	private SliceConfig sliceConfig;
 
 	public static void main(String[] args) {
-		SliceConfigReader<RangeConfig> reader = new SliceConfigReader<RangeConfig>();
+		SliceReader<RangeConfig> reader = new SliceConfigReader<RangeConfig>();
 		InputStream in = SliceConfigReader.class.getClassLoader().getResourceAsStream(
 				"config/slice.json");
 
@@ -28,6 +29,10 @@ public class SliceConfigReader<T extends SliceConfig> {
 		System.out.println(config);
 	}
 
+	/* (non-Javadoc)
+	 * @see fengfei.forest.slice.config.json.SliceReader#read(java.lang.String)
+	 */
+	@Override
 	public T read(String filePath) {
 
 		try {
@@ -40,6 +45,10 @@ public class SliceConfigReader<T extends SliceConfig> {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see fengfei.forest.slice.config.json.SliceReader#read(java.io.InputStream)
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public T read(InputStream in) {
 		ObjectMapper mapper = new ObjectMapper();
