@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum OverType {
-	Ignore(0),
-	Last(10),
+
+	Last(0),
+	First(10),
 	New(20),
-	Scattering(30),
-	Exception(40);
+	Exception(30);
 
 	private final int value;
 	private static Map<Integer, OverType> cache = new HashMap<Integer, OverType>();

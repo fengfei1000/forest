@@ -74,6 +74,30 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 		return slice;
 	}
 
+	@Override
+	public Slice first(Source key) {
+		long id = plotter.get(key);
+		Map.Entry<Long, LogicalSlice<Source>> entry = slices.firstEntry();
+		if (entry == null || entry.getValue() == null) {
+			throw new NonExistedSliceException("id=" + id + " non-existed.");
+		}
+		LogicalSlice<Source> logicSlice = entry.getValue();
+		Slice slice = logicSlice.getAny(id);
+		return slice;
+	}
+
+	@Override
+	public Slice last(Source key) {
+		long id = plotter.get(key);
+		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
+		if (entry == null || entry.getValue() == null) {
+			throw new NonExistedSliceException("id=" + id + " non-existed.");
+		}
+		LogicalSlice<Source> logicSlice = entry.getValue();
+		Slice slice = logicSlice.getAny(id);
+		return slice;
+	}
+
 	public Slice last(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
@@ -120,7 +144,7 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 	}
 
 	@Override
-	public Slice getAny(Source key) {
+	public Slice get(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		if (entry == null || entry.getValue() == null) {

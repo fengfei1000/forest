@@ -54,6 +54,7 @@ public class SliceGroupFactory {
 			throw new IllegalArgumentException("Can't support agr.");
 
 		}
+		sliceGroup.setOverType(group.getOverType());
 		build(type, group, sliceGroup);
 		return sliceGroup;
 

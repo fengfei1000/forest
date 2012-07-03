@@ -5,6 +5,7 @@
 		</plotterClass>
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>
+		<over>Last</over>
 		<algorithmType>Loop</algorithmType>
 		<unitSuffix>_</unitSuffix>
 		<defaultExtraInfo>

@@ -26,7 +26,8 @@ public class GroupConfig {
 	private String plotterClass;
 	@Attribute
 	private String type;
-	protected OverType over = OverType.Last;
+	@Element(required = false)
+	protected String over = OverType.Last.name();
 	@Element
 	private String unitSuffix = "_";
 	@Element(required = false)
@@ -53,8 +54,12 @@ public class GroupConfig {
 		this.id = id;
 		this.plotterClass = plotterClass;
 		this.type = type;
-		this.over = over;
+		this.over = over.name();
 		this.unitSuffix = unitSuffix;
+	}
+
+	public OverType getOverType() {
+		return OverType.find(over);
 	}
 
 	public FunctionType getFunctionType() {

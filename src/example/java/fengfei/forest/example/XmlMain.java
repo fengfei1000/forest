@@ -24,10 +24,10 @@ public class XmlMain {
 		String unitName = "unit1";
 		SliceGroup<Long> group = factory.getSliceGroup(unitName);
 		// System.out.println(group);
-		System.out.println(group.getAny(1l));
-		System.out.println(group.getAny(2l));
-		System.out.println(group.getAny(1l));
-		System.out.println(group.getAny(2l));
+		System.out.println(group.get(1l));
+		System.out.println(group.get(2l));
+		System.out.println(group.get(1l));
+		System.out.println(group.get(2l));
 		System.out.println(group.get(1l, Function.Read));
 		System.out.println(group.get(2l, Function.Read));
 		System.out.println(group.get(1l, Function.Read));
