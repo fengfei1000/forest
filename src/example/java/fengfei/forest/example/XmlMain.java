@@ -1,4 +1,4 @@
-package fengfei.forest.test;
+package fengfei.forest.example;
 
 import java.io.InputStream;
 
