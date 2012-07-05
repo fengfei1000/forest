@@ -38,10 +38,10 @@ public abstract class SliceGroup<Source> {
 
 		switch (overType) {
 		case First:
-			return first(key, function);
+			return function == null ? first(key) : first(key, function);
 
 		case Last:
-			return last(key, function);
+			return function == null ? last(key) : last(key, function);
 
 		case New:
 			return null;

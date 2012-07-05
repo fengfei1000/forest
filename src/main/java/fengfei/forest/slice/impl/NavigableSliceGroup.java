@@ -113,10 +113,23 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		if (entry == null || entry.getValue() == null) {
-			throw new NonExistedSliceException("id=" + id + " non-existed.");
+			return dealOver(key, function, id);
+			// throw new NonExistedSliceException("id=" + id + " non-existed.");
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
 		Slice slice = logicSlice.get(id, function);
+		return slice;
+	}
+
+	public Slice floor(Source key) {
+		long id = plotter.get(key);
+		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
+		if (entry == null || entry.getValue() == null) {
+			return dealOver(key, null, id);
+			// throw new NonExistedSliceException("id=" + id + " non-existed.");
+		}
+		LogicalSlice<Source> logicSlice = entry.getValue();
+		Slice slice = logicSlice.getAny(id);
 		return slice;
 	}
 
@@ -124,10 +137,23 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
 		if (entry == null || entry.getValue() == null) {
-			throw new NonExistedSliceException("id=" + id + " non-existed.");
+			return dealOver(key, function, id);
+			// throw new NonExistedSliceException("id=" + id + " non-existed.");
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
 		Slice slice = logicSlice.get(id, function);
+		return slice;
+	}
+
+	public Slice ceiling(Source key) {
+		long id = plotter.get(key);
+		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
+		if (entry == null || entry.getValue() == null) {
+			return dealOver(key, null, id);
+			// throw new NonExistedSliceException("id=" + id + " non-existed.");
+		}
+		LogicalSlice<Source> logicSlice = entry.getValue();
+		Slice slice = logicSlice.getAny(id);
 		return slice;
 	}
 
@@ -136,7 +162,8 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		if (entry == null || entry.getValue() == null) {
-			throw new NonExistedSliceException("id=" + id + " non-existed.");
+			return dealOver(key, function, id);
+			// throw new NonExistedSliceException("id=" + id + " non-existed.");
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
 		Slice slice = logicSlice.get(id, function);
@@ -148,7 +175,8 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		if (entry == null || entry.getValue() == null) {
-			throw new NonExistedSliceException("id=" + id + " non-existed.");
+			return dealOver(key, null, id);
+			// throw new NonExistedSliceException("id=" + id + " non-existed.");
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
 		Slice slice = logicSlice.getAny(id);
