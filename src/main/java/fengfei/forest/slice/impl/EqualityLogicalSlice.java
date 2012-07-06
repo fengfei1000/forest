@@ -1,5 +1,7 @@
 package fengfei.forest.slice.impl;
 
+import java.util.List;
+
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
@@ -41,6 +43,14 @@ public class EqualityLogicalSlice<Source> extends LogicalSlice<Source> {
             model = new LoopSliceModel();
         }
 
+    }
+
+    public int getSliceSize() {
+        return model.getSlices().size();
+    }
+
+    public List<Slice> getSlices() {
+        return model.getSlices();
     }
 
     @Override

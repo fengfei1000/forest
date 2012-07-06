@@ -1,6 +1,9 @@
 package fengfei.forest.slice.impl;
 
 import static org.junit.Assert.fail;
+
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
@@ -8,30 +11,15 @@ import org.junit.Test;
 
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.Slice;
-import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.model.Status;
 
-public class EqualityLogicalSliceTest {
+public class EqualityLogicalSliceTest extends BaseSliceTest {
 
     static EqualityLogicalSlice<LongSlicePlotter> slice = new EqualityLogicalSlice<>();
-    static int id = 1;
 
     @BeforeClass
     public static void setup() {
-        slice.setAlgorithmType(SliceAlgorithmType.Loop);
-        slice.setId("1");
-        slice.setStatus(Status.Normal);
-        slice.setSuffix("_1");
-        slice.setWeight(1);
-        slice.addExtraInfo("host", "localhost");
-        slice.addExtraInfo("port", "8022");
-        slice.addExtraInfo("user", "name");
-        slice.addExtraInfo("pwd", "pwd123");
-
-        slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-        slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-        slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-
+        create(slice);
     }
 
     private static PhysicalSlice createPhysicalSlice(
@@ -45,11 +33,16 @@ public class EqualityLogicalSliceTest {
         return slice;
     }
 
+    @Test
     public void testAddSlice() {
+        testMsg = "test add slice";
         int id = 10;
         slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
         slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
         slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
+        Assert.assertEquals(testMsg, 6, slice.getSliceSize());
+        List<Slice> slices = slice.getSlices();
+        System.out.println(slices);
 
     }
 
