@@ -19,6 +19,7 @@ public class EqualityLogicalSlice<Source> extends LogicalSlice<Source> {
 
     @Override
     public void addSlice(Slice slice, Function function) {
+        mergeInheritInfoTo(slice);
         model.addSlice(slice);
     }
 
@@ -48,9 +49,12 @@ public class EqualityLogicalSlice<Source> extends LogicalSlice<Source> {
         return model.next(id);
     }
 
-	@Override
-	public String toString() {
-		return "EqualityLogicalSlice [model=" + model + ", subSliceGroup=" + subSliceGroup + ", algorithmType=" + algorithmType + ", id=" + id + ", suffix=" + suffix + ", extraInfo=" + extraInfo + ", weight=" + weight + ", status=" + status + ", isPhysical=" + isPhysical + "]";
-	}
+    @Override
+    public String toString() {
+        return "EqualityLogicalSlice [model=" + model + ", subSliceGroup=" + subSliceGroup
+                + ", algorithmType=" + algorithmType + ", id=" + id + ", suffix=" + suffix
+                + ", extraInfo=" + extraInfo + ", weight=" + weight + ", status=" + status
+                + ", isPhysical=" + isPhysical + "]";
+    }
 
 }
