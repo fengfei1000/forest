@@ -20,7 +20,7 @@ public class MasterSlaveLogicalSlice<Source> extends LogicalSlice<Source> {
 	}
 
 	public void addSlice(Slice slice, Function function) {
-
+	    mergeInheritInfoTo(slice);
 		switch (function) {
 		case Master:
 			master.addSlice(slice);

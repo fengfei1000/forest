@@ -1,41 +1,39 @@
 package fengfei.forest.slice.impl;
 
-import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.model.Status;
 
 public class BaseSliceTest {
 
-    static int id = 1;
-    String testMsg = "test";
+	static final String PHOST = "localhost", PPORT = "8022", PUSER = "testUser",
+			PPWD = "pwd123";
+	static final String KEY_HOST = "host", KEY_PORT = "port", KEY_USER = "user",
+			KEY_PASSWORD = "password";
+	static int id = 1;
+	String testMsg = "test";
 
-    public static void create(LogicalSlice<LongSlicePlotter> slice) {
-        slice.setAlgorithmType(SliceAlgorithmType.Loop);
-        slice.setId("1");
-        slice.setStatus(Status.Normal);
-        slice.setSuffix("_1");
-        slice.setWeight(1);
-        slice.addExtraInfo("host", "localhost");
-        slice.addExtraInfo("port", "8022");
-        slice.addExtraInfo("user", "name");
-        slice.addExtraInfo("pwd", "pwd123");
+	public static void create(LogicalSlice<LongSlicePlotter> slice) {
+		slice.setAlgorithmType(SliceAlgorithmType.Loop);
+		slice.setId("1");
+		slice.setStatus(Status.Normal);
+		slice.setSuffix("_1");
+		slice.setWeight(1);
+		slice.addExtraInfo(KEY_HOST, PHOST);
+		slice.addExtraInfo(KEY_PORT, PPORT);
+		slice.addExtraInfo(KEY_USER, PUSER);
+		slice.addExtraInfo(KEY_PASSWORD, PUSER);
+	}
 
-        slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-        slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-        slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-
-    }
-
-    private static
-        PhysicalSlice
-        createPhysicalSlice(LogicalSlice<LongSlicePlotter> pslice, int id) {
-        PhysicalSlice slice = new PhysicalSlice();
-        slice.setId(String.valueOf(id));
-        slice.setStatus(Status.Normal);
-        slice.setWeight(1);
-        slice.addExtraInfo("host", "host" + id);
-        return slice;
-    }
+	public static PhysicalSlice createPhysicalSlice(
+			LogicalSlice<LongSlicePlotter> pslice,
+			int id) {
+		PhysicalSlice slice = new PhysicalSlice();
+		slice.setId(String.valueOf(id));
+		slice.setStatus(Status.Normal);
+		slice.setWeight(1);
+		slice.addExtraInfo(KEY_HOST, "host" + id);
+		return slice;
+	}
 
 }
