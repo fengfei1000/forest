@@ -5,8 +5,8 @@
 		</plotterClass>
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>
-		<over>Last</over>
-		<algorithmType>Loop</algorithmType>
+		<over>Exception</over>
+		<algorithmType>Hash</algorithmType>
 		<unitSuffix>_</unitSuffix>
 		<defaultExtraInfo>
 			<property key="host" value="127.0.0.1" />
@@ -35,7 +35,7 @@
 			</slice>
 		</slices>
 	</group>
-	<group id="unit2" type="Accuracy">
+	<group id="unit2" type="Accuracy" extends="unit1">
 
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>

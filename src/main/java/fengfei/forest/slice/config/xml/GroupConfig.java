@@ -2,8 +2,10 @@ package fengfei.forest.slice.config.xml;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -18,7 +20,7 @@ import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.impl.NavigableSliceGroup.NavigationType;
 
 @Root(name = "group", strict = false)
-public class GroupConfig {
+public class GroupConfig implements Cloneable {
 
 	@Attribute
 	private String id;
@@ -26,6 +28,9 @@ public class GroupConfig {
 	private String plotterClass;
 	@Attribute
 	private String type;
+	@Attribute(name = "extends",required = false)
+	private String parentId;
+
 	@Element(required = false)
 	protected String over = OverType.Last.name();
 	@Element
@@ -39,7 +44,7 @@ public class GroupConfig {
 	@ElementMap(attribute = true, key = "key", value = "value")
 	private Map<String, String> defaultExtraInfo = new HashMap<>();
 	@ElementList(name = "slices")
-	private List<SliceConfig> slices = new ArrayList<>();
+	private Set<SliceConfig> slices = new HashSet<>();
 
 	public GroupConfig() {
 	}
@@ -70,8 +75,12 @@ public class GroupConfig {
 		return SliceAlgorithmType.find(algorithmType);
 	}
 
-	public List<SliceConfig> getSlices() {
+	public Set<SliceConfig> getSlices() {
 		return slices;
+	}
+
+	public List<SliceConfig> getSliceList() {
+		return new ArrayList<>(slices);
 	}
 
 	public String getUnitSuffix() {
@@ -110,9 +119,80 @@ public class GroupConfig {
 		this.defaultExtraInfo = defaultExtraInfo;
 	}
 
+	public String getParentId() {
+		return parentId;
+	}
+
+	public String getOver() {
+		return over;
+	}
+
+	public void setOver(String over) {
+		this.over = over;
+	}
+
+	public String getFuncType() {
+		return funcType;
+	}
+
+	public void setFuncType(String funcType) {
+		this.funcType = funcType;
+	}
+
+	public String getAlgorithmType() {
+		return algorithmType;
+	}
+
+	public void setAlgorithmType(String algorithmType) {
+		this.algorithmType = algorithmType;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setPlotterClass(String plotterClass) {
+		this.plotterClass = plotterClass;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public void setUnitSuffix(String unitSuffix) {
+		this.unitSuffix = unitSuffix;
+	}
+
+	public void setNavigationType(String navigationType) {
+		this.navigationType = navigationType;
+	}
+
+	public void setSlices(Set<SliceConfig> slices) {
+		this.slices = slices;
+	}
+
+	public void addSlices(Set<SliceConfig> slices) {
+		this.slices.addAll(slices);
+	}
+
+	public void addSlices(SliceConfig slice) {
+		this.slices.add(slice);
+	}
+
 	@Override
 	public String toString() {
 		return "\n	GroupConfig [id=" + id + ", plotterClass=" + plotterClass + ", SliceGroupType=" + type + ", SliceAlgorithmType=" + algorithmType + ", over=" + over + ", unitSuffix=" + unitSuffix + ",\n	defaultExtraInfo=" + defaultExtraInfo + ", \n	slices=" + slices + "]";
+	}
+
+	@Override
+	protected GroupConfig clone() throws CloneNotSupportedException {
+		return (GroupConfig) super.clone();
+	}
+
+	public GroupConfig copy() throws CloneNotSupportedException {
+
+		return clone();
+
 	}
 
 }

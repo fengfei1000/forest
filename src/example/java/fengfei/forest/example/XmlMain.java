@@ -21,9 +21,9 @@ public class XmlMain {
 		SliceReader<SliceGroupFactory> reader = new XmlSliceReader();
 		SliceGroupFactory factory = reader.read(in);
 
-		String unitName = "unit1";
+		String unitName = "unit2";
 		SliceGroup<Long> group = factory.getSliceGroup(unitName);
-		// System.out.println(group);
+		 System.out.println(group);
 		System.out.println(group.get(1l));
 		System.out.println(group.get(2l));
 		System.out.println(group.get(1l));
@@ -34,8 +34,8 @@ public class XmlMain {
 		System.out.println(group.get(2l, Function.Read));
 		System.out.println(group.get(1l, Function.Write));
 		System.out.println(group.get(2l, Function.Write));
-		System.out.println(group.get(1l, Function.Write));
-		System.out.println(group.get(2l, Function.Write));
+		System.out.println(group.get(11l, Function.Write));
+		System.out.println(group.get(11l, Function.Write));
 
 		// Config config2 = new Config();
 		// config2.getGroups().add(

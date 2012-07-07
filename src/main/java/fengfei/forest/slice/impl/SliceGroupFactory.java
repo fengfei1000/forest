@@ -27,6 +27,47 @@ public class SliceGroupFactory {
 		for (GroupConfig group : groups) {
 			groupConfigCache.put(group.getId(), group);
 		}
+		for (GroupConfig group : groups) {
+			try {
+				GroupConfig groupConfig = inherit(group);
+				groupConfigCache.put(group.getId(), groupConfig);
+			} catch (CloneNotSupportedException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private GroupConfig inherit(GroupConfig group) throws CloneNotSupportedException {
+		String parentId = group.getParentId();
+		if (parentId == null) {
+			return group;
+		} else {
+			GroupConfig parentGroup = groupConfigCache.get(parentId);
+			if (parentGroup == null) {
+				return group;
+			} else {
+				GroupConfig config = inherit(parentGroup);
+				// FIXME copy
+				config = config.copy();
+				config.setId(group.getId());
+				config.setAlgorithmType(group.getAlgorithmType());
+				config.setFuncType(group.getFuncType());
+				config.setNavigationType(group.getNavigationType().name());
+				config.setOver(group.getOver());
+				config.setPlotterClass(group.getPlotterClass());
+				config.setType(group.getType());
+				config.setUnitSuffix(group.getUnitSuffix());
+				config.setDefaultExtraInfo(new HashMap<>(group.getDefaultExtraInfo()));
+//				config.addSlices(group.getSlices());
+
+				return config;
+
+			}
+
+		}
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -67,7 +108,7 @@ public class SliceGroupFactory {
 
 		FunctionType type = group.getFunctionType();
 		NavigationType navigationType = group.getNavigationType();
-		List<SliceConfig> sliceConfigs = group.getSlices();
+		List<SliceConfig> sliceConfigs = group.getSliceList();
 		group.getUnitSuffix();
 		int size = sliceConfigs.size();
 		for (int i = 0; i < size; i++) {

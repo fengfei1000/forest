@@ -47,9 +47,9 @@ public abstract class SliceGroup<Source> {
             return null;
 
         case Exception:
-            throw new NonExistedSliceException("id=" + id + " non-existed.");
+            throw new NonExistedSliceException("id=" + id + " non-existed slice.");
         default:
-            throw new NonExistedSliceException("id=" + id + " non-existed.");
+            throw new NonExistedSliceException("id=" + id + " non-existed slice.");
         }
     }
 
