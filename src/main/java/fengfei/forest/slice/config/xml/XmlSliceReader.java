@@ -38,6 +38,7 @@ public class XmlSliceReader implements SliceReader<SliceGroupFactory> {
 			Config config = serializer.read(Config.class, in, false);
 			SliceGroupFactory factory = new SliceGroupFactory();
 			factory.config(config);
+			System.out.println(config);
 			in.close();
 			return factory;
 		} catch (Exception e) {

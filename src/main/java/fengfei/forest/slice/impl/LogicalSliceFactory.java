@@ -1,6 +1,7 @@
 package fengfei.forest.slice.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,7 @@ class LogicalSliceFactory {
 		logicalSlice.setAlgorithmType(group.getSliceAlgorithmType());
 		GroupConfig subGroup = sliceConfig.getSubGroup();
 		if (subGroup != null) {
+			subGroup.setParentId(group.getId());
 			SliceGroup<Source> sliceGroup = sliceGroupFactory.create(subGroup);
 			logicalSlice.setSubSliceGroup(sliceGroup);
 		}

@@ -59,8 +59,8 @@ public class SliceGroupFactory {
 				config.setPlotterClass(group.getPlotterClass());
 				config.setType(group.getType());
 				config.setUnitSuffix(group.getUnitSuffix());
-				config.setDefaultExtraInfo(new HashMap<>(group.getDefaultExtraInfo()));
-//				config.addSlices(group.getSlices());
+				config.setDefaultExtraInfo(new HashMap<>(group.getDefaultExtraInfo())); 
+				config.setSlices(group.getSlices());
 
 				return config;
 
@@ -109,7 +109,7 @@ public class SliceGroupFactory {
 		FunctionType type = group.getFunctionType();
 		NavigationType navigationType = group.getNavigationType();
 		List<SliceConfig> sliceConfigs = group.getSliceList();
-		group.getUnitSuffix();
+
 		int size = sliceConfigs.size();
 		for (int i = 0; i < size; i++) {
 			SliceConfig sliceConfig = sliceConfigs.get(i);
@@ -146,6 +146,8 @@ public class SliceGroupFactory {
 						} else {
 							longs.add(Long.parseLong(sks[0]));
 						}
+					} else {
+						longs.add(Long.parseLong(sks[0]));
 					}
 				}
 			}

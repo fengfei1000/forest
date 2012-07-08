@@ -35,7 +35,7 @@
 			</slice>
 		</slices>
 	</group>
-	<group id="unit2" type="Accuracy" extends="unit1">
+	<group id="unit2" type="Navigable" extends="unit1">
 
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>

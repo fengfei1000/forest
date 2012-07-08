@@ -28,7 +28,7 @@ public enum SliceGroupType {
 	}
 
 	public static SliceGroupType find(String name) {
-		if (name == null || "".equals(name)) {
+		if (name == null || "".equals(name.trim())) {
 			return null;
 		}
 		SliceGroupType[] fs = values();

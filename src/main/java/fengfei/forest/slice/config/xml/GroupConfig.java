@@ -28,7 +28,7 @@ public class GroupConfig implements Cloneable {
 	private String plotterClass;
 	@Attribute
 	private String type;
-	@Attribute(name = "extends",required = false)
+	@Attribute(name = "extends", required = false)
 	private String parentId;
 
 	@Element(required = false)
@@ -41,9 +41,9 @@ public class GroupConfig implements Cloneable {
 	protected String navigationType = NavigationType.Floor.name();
 	@Element(required = false)
 	protected String algorithmType = SliceAlgorithmType.Loop.name();
-	@ElementMap(attribute = true, key = "key", value = "value")
+	@ElementMap(attribute = true, key = "key", value = "value", required = false)
 	private Map<String, String> defaultExtraInfo = new HashMap<>();
-	@ElementList(name = "slices")
+	@ElementList(name = "slices", required = false)
 	private Set<SliceConfig> slices = new HashSet<>();
 
 	public GroupConfig() {
