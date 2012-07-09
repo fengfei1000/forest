@@ -22,177 +22,188 @@ import fengfei.forest.slice.impl.NavigableSliceGroup.NavigationType;
 @Root(name = "group", strict = false)
 public class GroupConfig implements Cloneable {
 
-	@Attribute
-	private String id;
-	@Element(required = false)
-	private String plotterClass;
-	@Attribute
-	private String type;
-	@Attribute(name = "extends", required = false)
-	private String parentId;
+    @Attribute
+    private String id;
+    @Element(required = false)
+    private String plotterClass;
+    @Attribute(required = false)
+    private String type;
+    @Attribute(name = "extends", required = false)
+    private String parentId;
 
-	@Element(required = false)
-	protected String over = OverType.Last.name();
-	@Element
-	private String unitSuffix = "_";
-	@Element(required = false)
-	protected String funcType;
-	@Element(required = false)
-	protected String navigationType = NavigationType.Floor.name();
-	@Element(required = false)
-	protected String algorithmType = SliceAlgorithmType.Loop.name();
-	@ElementMap(attribute = true, key = "key", value = "value", required = false)
-	private Map<String, String> defaultExtraInfo = new HashMap<>();
-	@ElementList(name = "slices", required = false)
-	private Set<SliceConfig> slices = new HashSet<>();
+    @Element(required = false)
+    protected String over = OverType.Last.name();
+    @Element(required = false)
+    private String unitSuffix = "_";
+    @Element(required = false)
+    protected String funcType;
+    @Element(required = false)
+    protected String navigationType = NavigationType.Floor.name();
+    @Element(required = false)
+    protected String algorithmType = SliceAlgorithmType.Loop.name();
+    @ElementMap(attribute = true, key = "key", value = "value", required = false)
+    private Map<String, String> defaultExtraInfo = new HashMap<>();
+    @ElementList(name = "slices", required = false)
+    private Set<SliceConfig> slices = new HashSet<>();
 
-	public GroupConfig() {
-	}
+    public GroupConfig() {
+    }
 
-	public GroupConfig(
-			String id,
-			String plotterClass,
-			String type,
-			OverType over,
-			String unitSuffix) {
-		super();
-		this.id = id;
-		this.plotterClass = plotterClass;
-		this.type = type;
-		this.over = over.name();
-		this.unitSuffix = unitSuffix;
-	}
+    public GroupConfig(
+        String id,
+        String plotterClass,
+        String type,
+        OverType over,
+        String unitSuffix) {
+        super();
+        this.id = id;
+        this.plotterClass = plotterClass;
+        this.type = type;
+        this.over = over.name();
+        this.unitSuffix = unitSuffix;
+    }
 
-	public OverType getOverType() {
-		return OverType.find(over);
-	}
+    public OverType getOverType() {
+        return OverType.find(over);
+    }
 
-	public FunctionType getFunctionType() {
-		return FunctionType.find(funcType);
-	}
+    public FunctionType getFunctionType() {
+        return FunctionType.find(funcType);
+    }
 
-	public SliceAlgorithmType getSliceAlgorithmType() {
-		return SliceAlgorithmType.find(algorithmType);
-	}
+    public SliceAlgorithmType getSliceAlgorithmType() {
+        return SliceAlgorithmType.find(algorithmType);
+    }
 
-	public Set<SliceConfig> getSlices() {
-		return slices;
-	}
+    public Set<SliceConfig> getSlices() {
+        return slices;
+    }
 
-	public List<SliceConfig> getSliceList() {
-		return new ArrayList<>(slices);
-	}
+    public List<SliceConfig> getSliceList() {
+        return new ArrayList<>(slices);
+    }
 
-	public String getUnitSuffix() {
-		return unitSuffix;
-	}
+    public String getUnitSuffix() {
+        return unitSuffix;
+    }
 
-	public SliceGroupType getSliceGroupType() {
-		return SliceGroupType.find(type);
-	}
+    public SliceGroupType getSliceGroupType() {
+        return SliceGroupType.find(type);
+    }
 
-	public NavigationType getNavigationType() {
-		return NavigationType.find(navigationType);
-	}
+    public NavigationType getNavigationType() {
+        return NavigationType.find(navigationType);
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getPlotterClass() {
-		return plotterClass;
-	}
+    public String getPlotterClass() {
+        return plotterClass;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public Map<String, String> getDefaultExtraInfo() {
-		return defaultExtraInfo;
-	}
+    public Map<String, String> getDefaultExtraInfo() {
+        return defaultExtraInfo;
+    }
 
-	public void setDefaultExtraInfo(Map<String, String> defaultExtraInfo) {
-		this.defaultExtraInfo = defaultExtraInfo;
-	}
+    public void setDefaultExtraInfo(Map<String, String> defaultExtraInfo) {
+        this.defaultExtraInfo = defaultExtraInfo;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
+    public void addDefaultExtraInfo(Map<String, String> defaultExtraInfo) {
+        this.defaultExtraInfo.putAll(defaultExtraInfo);
+    }
 
-	public String getOver() {
-		return over;
-	}
+    public String getParentId() {
+        return parentId;
+    }
 
-	public void setOver(String over) {
-		this.over = over;
-	}
+    public String getOver() {
+        return over;
+    }
 
-	public String getFuncType() {
-		return funcType;
-	}
+    public void setOver(String over) {
+        this.over = over;
+    }
 
-	public void setFuncType(String funcType) {
-		this.funcType = funcType;
-	}
+    public String getFuncType() {
+        return funcType;
+    }
 
-	public String getAlgorithmType() {
-		return algorithmType;
-	}
+    public void setFuncType(String funcType) {
+        this.funcType = funcType;
+    }
 
-	public void setAlgorithmType(String algorithmType) {
-		this.algorithmType = algorithmType;
-	}
+    public String getAlgorithmType() {
+        return algorithmType;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public void setAlgorithmType(String algorithmType) {
+        this.algorithmType = algorithmType;
+    }
 
-	public void setPlotterClass(String plotterClass) {
-		this.plotterClass = plotterClass;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+    public void setPlotterClass(String plotterClass) {
+        this.plotterClass = plotterClass;
+    }
 
-	public void setUnitSuffix(String unitSuffix) {
-		this.unitSuffix = unitSuffix;
-	}
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	public void setNavigationType(String navigationType) {
-		this.navigationType = navigationType;
-	}
+    public void setUnitSuffix(String unitSuffix) {
+        this.unitSuffix = unitSuffix;
+    }
 
-	public void setSlices(Set<SliceConfig> slices) {
-		this.slices = slices;
-	}
+    public void setNavigationType(String navigationType) {
+        this.navigationType = navigationType;
+    }
 
-	public void addSlices(Set<SliceConfig> slices) {
-		this.slices.addAll(slices);
-	}
+    public String getNavigationTypeString() {
+        return this.navigationType;
+    }
 
-	public void addSlices(SliceConfig slice) {
-		this.slices.add(slice);
-	}
+    public void setSlices(Set<SliceConfig> slices) {
+        this.slices = slices;
+    }
 
-	@Override
-	public String toString() {
-		return "\n	GroupConfig [id=" + id + ", plotterClass=" + plotterClass + ", SliceGroupType=" + type + ", SliceAlgorithmType=" + algorithmType + ", over=" + over + ", unitSuffix=" + unitSuffix + ",\n	defaultExtraInfo=" + defaultExtraInfo + ", \n	slices=" + slices + "]";
-	}
+    public void addSlices(Set<SliceConfig> slices) {
+        this.slices.addAll(slices);
+    }
 
-	@Override
-	protected GroupConfig clone() throws CloneNotSupportedException {
-		return (GroupConfig) super.clone();
-	}
+    public void addSlices(SliceConfig slice) {
+        this.slices.add(slice);
+    }
 
-	public GroupConfig copy() throws CloneNotSupportedException {
+    @Override
+    public String toString() {
+        return "\n	GroupConfig [id=" + id + ", plotterClass=" + plotterClass + ", SliceGroupType="
+                + type + ", SliceAlgorithmType=" + algorithmType + ", over=" + over
+                + ", unitSuffix=" + unitSuffix + ",\n	defaultExtraInfo=" + defaultExtraInfo
+                + ", \n	slices=" + slices + "]";
+    }
 
-		return clone();
+    @Override
+    protected GroupConfig clone() throws CloneNotSupportedException {
+        return (GroupConfig) super.clone();
+    }
 
-	}
+    public GroupConfig copy() throws CloneNotSupportedException {
+
+        return clone();
+
+    }
 
 }

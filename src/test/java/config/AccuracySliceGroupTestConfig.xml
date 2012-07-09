@@ -10,20 +10,14 @@
 		<unitSuffix>_</unitSuffix>
 		<defaultExtraInfo>
 			<property key="host" value="127.0.0.1" />
-			<property key="port" value="1200" />
-			<property key="username" value="name" />
+			<property key="port" value="8022" />
+			<property key="username" value="testUser" />
 			<property key="password" value="pwd123" />
 		</defaultExtraInfo>
 	</group>
 	<group id="EqualitySliceUnit" type="Accuracy" extends="base">
-		<plotterClass>fengfei.forest.slice.impl.LongSlicePlotter
-		</plotterClass>
-		<navigationType>Floor</navigationType>
 		<funcType>Equality</funcType>
-		<over>Last</over>
-		<algorithmType>Loop</algorithmType>
-		<unitSuffix>_</unitSuffix>
-
+ 
 		<slices>
 			<slice id="1" weight="1">
 				<sourceKey>1</sourceKey>

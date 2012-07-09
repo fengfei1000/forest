@@ -1,18 +1,25 @@
 package fengfei.forest.slice.impl;
 
+import static org.junit.Assert.*;
+
 import java.io.InputStream;
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import fengfei.forest.example.XmlMain;
 import fengfei.forest.slice.Slice;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.config.xml.XmlSliceReader;
 
-public class AccuracySliceGroupTest {
+public class AccuracySliceGroupTest extends BaseSliceTest {
 
+	static final String PHOST = "localhost", PPORT = "8022", PUSER = "testUser",
+			PPWD = "pwd123";
+	static final String KEY_HOST = "host", KEY_PORT = "port", KEY_USER = "username",
+			KEY_PASSWORD = "password";
 	static SliceGroupFactory factory;
 	String testMsg = "test";
 
@@ -28,9 +35,34 @@ public class AccuracySliceGroupTest {
 	public void testEqualityLogicalSlice() {
 		SliceGroup<Long> group = factory.getSliceGroup("EqualitySliceUnit");
 		System.out.println(group);
-		Slice slice = group.get(1l);
-		assertNotNull(slice);
-		assertEquals("1", slice.getId());
+		Slice slice1 = group.get(1l);
+		assertNotNull(slice1);
+		assertNotNull(slice1.getId());
+		Map<String, String> exMap = slice1.getExtraInfo();
+		assertFalse(PHOST.equals(exMap.get(KEY_HOST)));
+		assertTrue(PPORT.equals(exMap.get(KEY_PORT)));
+		assertTrue(PUSER.equals(exMap.get(KEY_USER)));
+		assertTrue(PPWD.equals(exMap.get(KEY_PASSWORD)));
+
+		Slice slice2 = group.get(2l);
+		assertNotNull(slice2);
+		assertNotNull(slice2.getId());
+		exMap = slice2.getExtraInfo();
+		assertFalse(PHOST.equals(exMap.get(KEY_HOST)));
+		assertTrue(PPORT.equals(exMap.get(KEY_PORT)));
+		assertTrue(PUSER.equals(exMap.get(KEY_USER)));
+		assertTrue(PPWD.equals(exMap.get(KEY_PASSWORD)));
+		Slice slice3 = group.get(3l);
+		assertNotNull(slice3);
+		assertEquals(slice3.getSuffix(), slice2.getSuffix());
+		assertFalse(slice3.getSuffix().equals(slice1.getSuffix()));
+		assertNotNull(slice3.getId());
+		exMap = slice3.getExtraInfo();
+		assertFalse(PHOST.equals(exMap.get(KEY_HOST)));
+		assertTrue(PPORT.equals(exMap.get(KEY_PORT)));
+		assertTrue(PUSER.equals(exMap.get(KEY_USER)));
+		assertTrue(PPWD.equals(exMap.get(KEY_PASSWORD)));
+
 	}
 
 }
