@@ -1,8 +1,7 @@
-package fengfei.forest.slice.database.dbutils.pool;
+package fengfei.forest.slice.database;
 
 import javax.sql.DataSource;
 
-import fengfei.forest.slice.database.ServerSlice;
 
 public interface PooledDataSourceFactory {
 

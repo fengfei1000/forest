@@ -1,4 +1,4 @@
-package fengfei.forest.slice.database.dbutils.pool;
+package fengfei.forest.slice.database.pool;
 
 import javax.sql.DataSource;
 
@@ -7,7 +7,9 @@ import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fengfei.forest.slice.database.PooledDataSourceFactory;
 import fengfei.forest.slice.database.ServerSlice;
+import fengfei.forest.slice.database.utils.SliceUtils;
 
 public class TomcatJDBCPooledDataSourceFactory implements PooledDataSourceFactory {
 

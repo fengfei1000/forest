@@ -1,4 +1,4 @@
-package fengfei.forest.slice.database.dbutils.pool;
+package fengfei.forest.slice.database.utils;
 
 import fengfei.forest.slice.database.ServerSlice;
 
