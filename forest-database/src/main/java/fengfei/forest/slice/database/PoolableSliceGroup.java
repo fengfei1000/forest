@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.SlicePlotter;
-import fengfei.forest.slice.impl.SliceGroupFactory;
 
 public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 
@@ -17,15 +16,17 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
     private ConnectonUrlMaker urlMaker;
     private PoolableDataSourceFactory dataSourceFactory;
 
-    public PoolableSliceGroup(SliceGroupFactory factory, String unitName) {
-        super(factory, unitName);
+    public PoolableSliceGroup(DatabaseSliceGroupFactory factory, String unitName) {
+        this(factory, null, unitName);
     }
 
     public PoolableSliceGroup(
-        SliceGroupFactory factory,
+        DatabaseSliceGroupFactory factory,
         SlicePlotter<Source> plotter,
         String unitName) {
         super(factory, plotter, unitName);
+        this.dataSourceFactory = factory.getPoolableDataSourceFactory(unitName);
+        this.urlMaker = factory.getConnectonUrlMaker(unitName);
     }
 
     public Connection getConnection(Source key) throws SQLException {

@@ -1,7 +1,6 @@
 package fengfei.forest.slice.database.pool;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
 
 import javax.sql.DataSource;
 
@@ -9,7 +8,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jolbox.bonecp.BoneCPConfig;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 import fengfei.forest.slice.database.PoolableDataSourceFactory;

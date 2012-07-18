@@ -188,6 +188,9 @@ public class SliceGroupFactory {
             sliceGroup = create(group);
             sliceGroupCache.put(group.getId(), sliceGroup);
         }
+        if (sliceGroup == null) {
+            throw new NonExistedSliceException("unitName=" + unitName);
+        }
         return sliceGroup;
 
     }
@@ -196,17 +199,11 @@ public class SliceGroupFactory {
         <Source>
         SliceGroup<Source>
         getSliceGroup(SlicePlotter<Source> plotter, String unitName) {
-        @SuppressWarnings("unchecked")
-        SliceGroup<Source> sliceGroup = (SliceGroup<Source>) sliceGroupCache.get(unitName);
-        if (sliceGroup == null) {
-            GroupConfig group = groupConfigCache.get(unitName);
-            sliceGroup = create(group);
-            sliceGroupCache.put(group.getId(), sliceGroup);
+        SliceGroup<Source> sliceGroup = getSliceGroup(unitName);
+        if (plotter != null) {
+            sliceGroup.setPlotter(plotter);
         }
-        if (sliceGroup == null) {
-            throw new NonExistedSliceException("unitName=" + unitName);
-        }
-        sliceGroup.setPlotter(plotter);
+
         return sliceGroup;
 
     }
