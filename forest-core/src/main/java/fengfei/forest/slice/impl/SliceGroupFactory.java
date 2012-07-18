@@ -18,9 +18,9 @@ import fengfei.forest.slice.impl.NavigableSliceGroup.NavigationType;
 
 public class SliceGroupFactory {
 
-    private Map<String, SliceGroup<?>> sliceGroupCache = new HashMap<>();
-    private Map<String, GroupConfig> groupConfigCache = new HashMap<>();
-    private LogicalSliceFactory logicalSliceFactory = new LogicalSliceFactory(this);
+    protected Map<String, SliceGroup<?>> sliceGroupCache = new HashMap<>();
+    protected Map<String, GroupConfig> groupConfigCache = new HashMap<>();
+    protected LogicalSliceFactory logicalSliceFactory = new LogicalSliceFactory(this);
 
     public void config(Config config) {
         List<GroupConfig> groups = config.getGroups();

@@ -10,7 +10,7 @@ import fengfei.forest.slice.impl.SliceGroupFactory;
 
 public class DatabaseSliceGroup<Source> extends SliceGroup<Source> {
 
-    private SliceGroup<Source> sliceGroup;
+    protected SliceGroup<Source> sliceGroup;
 
     public DatabaseSliceGroup(SliceGroupFactory factory, String unitName) {
         this.sliceGroup = factory.getSliceGroup(unitName);

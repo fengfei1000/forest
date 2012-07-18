@@ -12,17 +12,17 @@ import org.apache.commons.pool.ObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fengfei.forest.slice.database.PooledDataSourceFactory;
+import fengfei.forest.slice.database.PoolableDataSourceFactory;
 import fengfei.forest.slice.database.ServerSlice;
 import fengfei.forest.slice.database.utils.SliceUtils;
 
-public class DbcpPooledDataSourceFactory implements PooledDataSourceFactory {
+public class DbcpPoolableDataSourceFactory implements PoolableDataSourceFactory {
 
     private static final Logger logger = LoggerFactory
-        .getLogger(DbcpPooledDataSourceFactory.class);
+        .getLogger(DbcpPoolableDataSourceFactory.class);
 
     @Override
-    public DataSource createDataSource(String key, String url, ServerSlice slice) {
+    public DataSource createDataSource(String url, ServerSlice slice) {
 
         DataSource ds = null;
         ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(

@@ -7,17 +7,17 @@ import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fengfei.forest.slice.database.PooledDataSourceFactory;
+import fengfei.forest.slice.database.PoolableDataSourceFactory;
 import fengfei.forest.slice.database.ServerSlice;
 import fengfei.forest.slice.database.utils.SliceUtils;
 
-public class TomcatJDBCPooledDataSourceFactory implements PooledDataSourceFactory {
+public class TomcatPoolableDataSourceFactory implements PoolableDataSourceFactory {
 
     private static final Logger logger = LoggerFactory
-        .getLogger(TomcatJDBCPooledDataSourceFactory.class);
+        .getLogger(TomcatPoolableDataSourceFactory.class);
 
     @Override
-    public DataSource createDataSource(String key, String url, ServerSlice slice) {
+    public DataSource createDataSource(String url, ServerSlice slice) {
 
         org.apache.tomcat.jdbc.pool.DataSource ds = null;
         try {
