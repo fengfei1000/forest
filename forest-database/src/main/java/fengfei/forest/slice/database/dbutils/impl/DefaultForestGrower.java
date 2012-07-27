@@ -29,7 +29,7 @@ public class DefaultForestGrower implements ForestGrower {
     }
 
     @Override
-    public <T> List<T> select(Transducer<T> transducer, String sql, Object... params)
+    public <T> List<T> select(String sql, Transducer<T> transducer, Object... params)
         throws SQLException {
         printlnSQL(sql, params);
         List<T> list = runner.query(connection, sql, new ListHandler<T>(transducer), params);
@@ -37,14 +37,14 @@ public class DefaultForestGrower implements ForestGrower {
     }
 
     @Override
-    public <T> List<T> select(Class<T> clazz, String sql, Object... params) throws SQLException {
+    public <T> List<T> select(String sql, Class<T> clazz, Object... params) throws SQLException {
         printlnSQL(sql, params);
         List<T> list = runner.query(connection, sql, new BeanListHandler<T>(clazz), params);
         return list;
     }
 
     @Override
-    public <T> T selectOne(Transducer<T> transducer, String sql, Object... params)
+    public <T> T selectOne(String sql, Transducer<T> transducer, Object... params)
         throws SQLException {
         printlnSQL(sql, params);
         T one = runner.query(connection, sql, new OneBeanHandler<T>(transducer), params);
@@ -52,7 +52,7 @@ public class DefaultForestGrower implements ForestGrower {
     }
 
     @Override
-    public <T> T selectOne(Class<T> clazz, String sql, Object... params) throws SQLException {
+    public <T> T selectOne(String sql, Class<T> clazz, Object... params) throws SQLException {
         printlnSQL(sql, params);
         T one = runner.query(connection, sql, new BeanHandler<T>(clazz), params);
         return one;

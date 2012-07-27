@@ -1,6 +1,5 @@
 package fengfei.forest.slice.database;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,7 +11,7 @@ import fengfei.forest.slice.SlicePlotter;
 
 public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 
-    private Map<String, DataSource> pooledDataSource = new ConcurrentHashMap<>();
+    private Map<String, DataSource> pooledDataSources = new ConcurrentHashMap<>();
     private ConnectonUrlMaker urlMaker;
     private PoolableDataSourceFactory dataSourceFactory;
 
@@ -29,23 +28,31 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
         this.urlMaker = factory.getConnectonUrlMaker(unitName);
     }
 
-    public Connection getConnection(Source key) throws SQLException {
+    public DataSource getDataSource(Source key) throws SQLException {
         ServerSlice slice = get(key);
-        return getConnection(slice);
+        return getDataSource(slice);
     }
 
-    public Connection getConnection(Source key, Function function) throws SQLException {
+    public DataSource getDataSource(Source key, Function function) throws SQLException {
         ServerSlice slice = get(key, function);
-        return getConnection(slice);
+        return getDataSource(slice);
     }
 
-    protected Connection getConnection(ServerSlice slice) throws SQLException {
+    protected DataSource getDataSource(ServerSlice slice) throws SQLException {
         String url = urlMaker.makeUrl(slice);
-        DataSource dataSource = pooledDataSource.get(url);
+        DataSource dataSource = pooledDataSources.get(url);
         if (dataSource == null) {
             dataSource = dataSourceFactory.createDataSource(url, slice);
+            pooledDataSources.put(url, dataSource);
         }
-        return dataSource.getConnection();
+        return dataSource;
+    }
+
+    @Override
+    public String toString() {
+        return "PoolableSliceGroup [pooledDataSources=" + pooledDataSources + ", urlMaker="
+                + urlMaker + ", dataSourceFactory=" + dataSourceFactory + ", sliceGroup="
+                + sliceGroup + ", plotter=" + plotter + ", overType=" + overType + "]";
     }
 
 }

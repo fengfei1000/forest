@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ForestGrower {
 
-    <T> List<T> select(Transducer<T> transducer, String sql, Object... params) throws SQLException;
+    <T> List<T> select(String sql, Transducer<T> transducer, Object... params) throws SQLException;
 
-    <T> List<T> select(Class<T> clazz, String sql, Object... params) throws SQLException;
+    <T> List<T> select(String sql, Class<T> clazz, Object... params) throws SQLException;
 
-    <T> T selectOne(Transducer<T> transducer, String sql, Object... params) throws SQLException;
+    <T> T selectOne(String sql, Transducer<T> transducer, Object... params) throws SQLException;
 
-    <T> T selectOne(Class<T> clazz, String sql, Object... params) throws SQLException;
+    <T> T selectOne(String sql, Class<T> clazz, Object... params) throws SQLException;
 
     int count(String sql, Object... params) throws SQLException;
 

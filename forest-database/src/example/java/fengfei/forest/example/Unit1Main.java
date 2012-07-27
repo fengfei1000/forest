@@ -2,13 +2,15 @@ package fengfei.forest.example;
 
 import java.io.InputStream;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import javax.sql.DataSource;
 
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.config.xml.Config;
 import fengfei.forest.slice.config.xml.XmlSliceReader;
+import fengfei.forest.slice.database.DatabaseSliceGroupFactory;
+import fengfei.forest.slice.database.PoolableSliceGroup;
 import fengfei.forest.slice.impl.SliceGroupFactory;
 
 public class Unit1Main {
@@ -21,16 +23,17 @@ public class Unit1Main {
 
         InputStream in = Unit1Main.class.getClassLoader().getResourceAsStream("config/config.xml");
         SliceReader<SliceGroupFactory> reader = new XmlSliceReader();
-        SliceGroupFactory factory = new SliceGroupFactory();
         Config config = reader.readConfig(in);
-        factory.config(config);
-        ObjectMapper mapper = new ObjectMapper();
-        String s = mapper.writeValueAsString(config);
-        System.out.println(s);
-        in.close();
+        System.out.println(config);
         String unitName = "unit1";
-        SliceGroup<Long> group = factory.getSliceGroup(unitName);
+        DatabaseSliceGroupFactory groupFactory = new DatabaseSliceGroupFactory();
+        groupFactory.config(config);
+        in.close();
+        PoolableSliceGroup<Long> group = groupFactory.getPoolableSliceGroup(unitName);
         System.out.println(group);
+        DataSource dataSource = group.getDataSource(1l);
+        System.out.println(dataSource);
+        System.out.println(dataSource.getConnection());
         System.out.println(group.get(1l));
         System.out.println(group.get(2l));
         System.out.println(group.get(1l));

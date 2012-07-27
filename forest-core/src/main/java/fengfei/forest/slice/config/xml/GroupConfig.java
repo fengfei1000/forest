@@ -201,8 +201,20 @@ public class GroupConfig implements Cloneable {
     }
 
     public GroupConfig copy() throws CloneNotSupportedException {
+        GroupConfig config = new GroupConfig();
+        config.setAlgorithmType(getAlgorithmType());
+        config.setDefaultExtraInfo(new HashMap<>(getDefaultExtraInfo()));
+        config.setFuncType(getFuncType());
+        config.setId(getId());
+        config.setNavigationType(getNavigationTypeString());
+        config.setOver(getOver());
+        config.setParentId(getParentId());
+        config.setPlotterClass(getPlotterClass());
+        config.setType(getType());
+        config.setSlices(new HashSet<>(getSlices()));
+        config.setUnitSuffix(getUnitSuffix());
 
-        return clone();
+        return config;
 
     }
 

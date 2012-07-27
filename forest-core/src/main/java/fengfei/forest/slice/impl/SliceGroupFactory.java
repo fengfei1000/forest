@@ -185,6 +185,7 @@ public class SliceGroupFactory {
         SliceGroup<Source> sliceGroup = (SliceGroup<Source>) sliceGroupCache.get(unitName);
         if (sliceGroup == null) {
             GroupConfig group = groupConfigCache.get(unitName);
+            System.out.println("1:  " + group);
             sliceGroup = create(group);
             sliceGroupCache.put(group.getId(), sliceGroup);
         }

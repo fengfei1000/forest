@@ -35,7 +35,7 @@ public class ServerSlice extends Slice {
     }
 
     public int getPort() {
-        return Integer.parseInt(KEY_PORT);
+        return Integer.parseInt(extraInfo.get(KEY_PORT));
     }
 
     public String getDriverClass() {
