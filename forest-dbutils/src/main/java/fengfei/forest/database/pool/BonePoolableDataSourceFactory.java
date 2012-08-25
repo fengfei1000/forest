@@ -9,6 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jolbox.bonecp.BoneCPConfig;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 public class BonePoolableDataSourceFactory implements PoolableDataSourceFactory {
@@ -25,9 +26,9 @@ public class BonePoolableDataSourceFactory implements PoolableDataSourceFactory 
 			Map<String, String> params) {
 		try {
 			Class.forName(driverClass); // load the DB driver
-
-			BoneCPDataSource ds = new BoneCPDataSource();
-			BeanUtils.copyProperties(ds, params);
+			BoneCPConfig config = new BoneCPConfig();
+			BeanUtils.copyProperties(config, params);
+			BoneCPDataSource ds = new BoneCPDataSource(config);
 			ds.setJdbcUrl(url); // set the JDBC url
 			ds.setUsername(user); // set the username
 			ds.setPassword(password); // set the password

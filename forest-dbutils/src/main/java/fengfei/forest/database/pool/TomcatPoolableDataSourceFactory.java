@@ -27,6 +27,10 @@ public class TomcatPoolableDataSourceFactory implements PoolableDataSourceFactor
 		org.apache.tomcat.jdbc.pool.DataSource ds = null;
 		try {
 			PoolProperties poolProperties = new PoolProperties();
+			poolProperties.setDriverClassName(driverClass);
+			poolProperties.setUrl(url);
+			poolProperties.setUsername(user);
+			poolProperties.setPassword(password);
 
 			poolProperties.setLogAbandoned(ParamsUtils.getDefaultBoolean(
 					params,

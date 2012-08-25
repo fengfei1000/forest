@@ -50,6 +50,8 @@ public class DbcpPoolableDataSourceFactory implements PoolableDataSourceFactory 
 			// for watch connections
 			connectionPool = new AbandonedObjectPool(null, conf);
 			BeanUtils.copyProperties(connectionPool, params);
+	 
+			 
 			// }
 			new PoolableConnectionFactory(
 					connectionFactory,
