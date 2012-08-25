@@ -104,8 +104,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.19</version>
 		</dependency>
-<<<<<<< HEAD
-=======
+ 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -127,7 +126,7 @@
 			<artifactId>mybatis</artifactId>
 			<version>3.1.1</version>
 		</dependency>
->>>>>>> add feature
+ 
 	</dependencies>
 	<repositories>
 		<repository>
