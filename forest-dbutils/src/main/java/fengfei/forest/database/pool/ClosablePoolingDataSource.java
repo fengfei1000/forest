@@ -1,4 +1,4 @@
-package fengfei.forest.slice.database.pool;
+package fengfei.forest.database.pool;
 
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.ObjectPool;

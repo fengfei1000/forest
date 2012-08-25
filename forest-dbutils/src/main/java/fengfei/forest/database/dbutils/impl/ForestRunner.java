@@ -1,4 +1,4 @@
-package fengfei.forest.slice.database.dbutils.impl;
+package fengfei.forest.database.dbutils.impl;
 
 import java.sql.SQLException;
 import java.util.Arrays;

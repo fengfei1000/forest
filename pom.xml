@@ -12,6 +12,7 @@
   <modules>
     <module>forest-core</module>
     <module>forest-database</module>
+    <module>forest-dbutils</module>
   </modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

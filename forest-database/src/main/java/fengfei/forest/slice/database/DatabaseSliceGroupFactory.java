@@ -6,12 +6,12 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fengfei.forest.database.pool.BonePoolableDataSourceFactory;
+import fengfei.forest.database.pool.DbcpPoolableDataSourceFactory;
+import fengfei.forest.database.pool.PoolableDataSourceFactory;
+import fengfei.forest.database.pool.TomcatPoolableDataSourceFactory;
 import fengfei.forest.slice.SlicePlotter;
-
 import fengfei.forest.slice.config.xml.GroupConfig;
-import fengfei.forest.slice.database.pool.BonePoolableDataSourceFactory;
-import fengfei.forest.slice.database.pool.DbcpPoolableDataSourceFactory;
-import fengfei.forest.slice.database.pool.TomcatPoolableDataSourceFactory;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 import fengfei.forest.slice.impl.SliceGroupFactory;
 

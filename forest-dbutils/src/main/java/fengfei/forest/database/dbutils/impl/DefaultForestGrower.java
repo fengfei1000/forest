@@ -1,4 +1,4 @@
-package fengfei.forest.slice.database.dbutils.impl;
+package fengfei.forest.database.dbutils.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,11 +11,11 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fengfei.forest.slice.database.dbutils.Transducer;
-import fengfei.forest.slice.database.dbutils.ListHandler;
-import fengfei.forest.slice.database.dbutils.OneBeanHandler;
-import fengfei.forest.slice.database.dbutils.ForestGrower;
-import fengfei.forest.slice.database.dbutils.SingleValueHandler;
+import fengfei.forest.database.dbutils.ForestGrower;
+import fengfei.forest.database.dbutils.ListHandler;
+import fengfei.forest.database.dbutils.OneBeanHandler;
+import fengfei.forest.database.dbutils.SingleValueHandler;
+import fengfei.forest.database.dbutils.Transducer;
 
 public class DefaultForestGrower implements ForestGrower {
 
