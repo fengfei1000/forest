@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.Slice;
-
+@Ignore
 public class EqualityLogicalSliceTest extends BaseSliceTest {
 
 	static EqualityLogicalSlice<LongSlicePlotter> slice = new EqualityLogicalSlice<>();

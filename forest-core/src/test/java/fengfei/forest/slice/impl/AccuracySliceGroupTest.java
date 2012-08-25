@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Map;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import fengfei.forest.example.XmlMain;
@@ -13,7 +14,7 @@ import fengfei.forest.slice.Slice;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.config.xml.XmlSliceReader;
-
+@Ignore
 public class AccuracySliceGroupTest extends BaseSliceTest {
 
 	static final String PHOST = "localhost", PPORT = "8022", PUSER = "testUser",

@@ -1,9 +1,11 @@
 package fengfei.forest.slice.impl;
 
+import org.junit.Ignore;
+
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.model.Status;
-
+@Ignore
 public class BaseSliceTest {
 
     static final String PHOST = "localhost", PPORT = "8022", PUSER = "testUser", PPWD = "pwd123";
