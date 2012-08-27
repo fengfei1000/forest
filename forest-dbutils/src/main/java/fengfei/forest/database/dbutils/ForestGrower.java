@@ -10,16 +10,20 @@ public interface ForestGrower {
 	<T> List<T> select(String sql, Transducer<T> transducer, Object... params)
 			throws SQLException;
 
-	<T> List<T> select(String sql, Class<T> clazz, Object... params) throws SQLException;
+	<T> List<T> select(String sql, Class<T> clazz, Object... params)
+			throws SQLException;
 
-	List<Map<String, Object>> select(String sql, Object... params) throws SQLException;
+	List<Map<String, Object>> select(String sql, Object... params)
+			throws SQLException;
 
 	<T> T selectOne(String sql, Transducer<T> transducer, Object... params)
 			throws SQLException;
 
-	<T> T selectOne(String sql, Class<T> clazz, Object... params) throws SQLException;
+	<T> T selectOne(String sql, Class<T> clazz, Object... params)
+			throws SQLException;
 
-	Map<String, Object> selectOne(String sql, Object... params) throws SQLException;
+	Map<String, Object> selectOne(String sql, Object... params)
+			throws SQLException;
 
 	int count(String sql, Object... params) throws SQLException;
 
@@ -37,4 +41,5 @@ public interface ForestGrower {
 
 	Connection getConnection();
 
+	void setConnection(Connection connection);
 }

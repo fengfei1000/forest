@@ -11,18 +11,16 @@ import org.slf4j.LoggerFactory;
 
 import fengfei.forest.database.utils.ParamsUtils;
 
-public class TomcatPoolableDataSourceFactory implements PoolableDataSourceFactory {
+public class TomcatPoolableDataSourceFactory implements
+		PoolableDataSourceFactory {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(TomcatPoolableDataSourceFactory.class);
 
 	@Override
-	public DataSource createDataSource(
-			String driverClass,
-			String url,
-			String user,
-			String password,
-			Map<String, String> params) {
+	public DataSource createDataSource(String driverClass, String url,
+			String user, String password, Map<String, String> params)
+			throws PoolableException {
 
 		org.apache.tomcat.jdbc.pool.DataSource ds = null;
 		try {
@@ -33,26 +31,21 @@ public class TomcatPoolableDataSourceFactory implements PoolableDataSourceFactor
 			poolProperties.setPassword(password);
 
 			poolProperties.setLogAbandoned(ParamsUtils.getDefaultBoolean(
-					params,
-					"logAbandoned",
-					false));
+					params, "logAbandoned", false));
 			poolProperties.setRemoveAbandoned(ParamsUtils.getDefaultBoolean(
-					params,
-					"removeAbandoned",
-					false));
+					params, "removeAbandoned", false));
 			poolProperties.setRemoveAbandonedTimeout(ParamsUtils.getDefaultInt(
-					params,
-					"removeAbandonedTimeout",
-					60));
+					params, "removeAbandonedTimeout", 60));
 			BeanUtils.copyProperties(poolProperties, params);
 
 			poolProperties
-					.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;" + "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+					.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
+							+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
 			ds = new org.apache.tomcat.jdbc.pool.DataSource();
 			ds.setPoolProperties(poolProperties);
 		} catch (Exception e) {
-			logger.error("init error", e);
-			throw new RuntimeException(e);
+			logger.error("create tomcat.jdbc.pool.DataSource  error", e);
+			throw new PoolableException("create tomcat.jdbc.pool.DataSource  error", e);
 		}
 
 		return ds;
@@ -60,9 +53,13 @@ public class TomcatPoolableDataSourceFactory implements PoolableDataSourceFactor
 	}
 
 	@Override
-	public void destory(DataSource dataSource) {
-		org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) dataSource;
-		ds.close();
+	public void destory(DataSource dataSource) throws PoolableException {
+		try {
+			org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) dataSource;
+			ds.close();
+		} catch (Throwable e) {
+			throw new PoolableException("destory tomcat.jdbc.pool.DataSource error", e);
+		}
 
 	}
 

@@ -35,9 +35,8 @@
 						<configuration>
 							<sources>
 								<source>/src/main/java</source>
-								<source>/src/main/resources</source>
+								<!-- <source>/src/main/resources</source> -->
 								<source>/src/example/java</source>
-								<source>/src/example/resources</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -50,7 +49,7 @@
 						<configuration>
 							<sources>
 								<source>/src/test/java</source>
-								<source>/src/test/resources</source>
+							<!-- 	<source>/src/test/resources</source> -->
 							</sources>
 						</configuration>
 					</execution>

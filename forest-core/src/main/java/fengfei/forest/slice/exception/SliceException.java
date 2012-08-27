@@ -15,4 +15,9 @@ public class SliceException extends Exception {
 		super(description, throwable);
 
 	}
+
+	@Override
+	public synchronized Throwable fillInStackTrace() {
+		return null;
+	}
 }

@@ -22,20 +22,22 @@ import fengfei.forest.database.dbutils.Transducer;
 
 public class DefaultForestGrower implements ForestGrower {
 
-	private static Logger logger = LoggerFactory.getLogger(DefaultForestGrower.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(DefaultForestGrower.class);
 	private Connection connection;
 	private QueryRunner runner;
 
 	public DefaultForestGrower(Connection connection) {
 		runner = new ForestRunner();
-		this.connection = connection;
+		setConnection(connection);
 	}
 
 	@Override
-	public <T> List<T> select(String sql, Transducer<T> transducer, Object... params)
-			throws SQLException {
+	public <T> List<T> select(String sql, Transducer<T> transducer,
+			Object... params) throws SQLException {
 		printlnSQL(sql, params);
-		List<T> list = runner.query(connection, sql, new ListHandler<T>(transducer), params);
+		List<T> list = runner.query(connection, sql, new ListHandler<T>(
+				transducer), params);
 		return list;
 	}
 
@@ -43,45 +45,50 @@ public class DefaultForestGrower implements ForestGrower {
 	public <T> List<T> select(String sql, Class<T> clazz, Object... params)
 			throws SQLException {
 		printlnSQL(sql, params);
-		List<T> list = runner.query(connection, sql, new BeanListHandler<T>(clazz), params);
+		List<T> list = runner.query(connection, sql, new BeanListHandler<T>(
+				clazz), params);
 		return list;
 	}
 
-	public List<Map<String, Object>> select(String sql, Object... params) throws SQLException {
-		printlnSQL(sql, params);
-		List<Map<String, Object>> list = runner.query(
-				connection,
-				sql,
-				new MapListHandler(),
-				params);
-		return list;
-	}
-
-	@Override
-	public <T> T selectOne(String sql, Transducer<T> transducer, Object... params)
+	public List<Map<String, Object>> select(String sql, Object... params)
 			throws SQLException {
 		printlnSQL(sql, params);
-		T one = runner.query(connection, sql, new OneBeanHandler<T>(transducer), params);
+		List<Map<String, Object>> list = runner.query(connection, sql,
+				new MapListHandler(), params);
+		return list;
+	}
+
+	@Override
+	public <T> T selectOne(String sql, Transducer<T> transducer,
+			Object... params) throws SQLException {
+		printlnSQL(sql, params);
+		T one = runner.query(connection, sql,
+				new OneBeanHandler<T>(transducer), params);
 		return one;
 	}
 
 	@Override
-	public <T> T selectOne(String sql, Class<T> clazz, Object... params) throws SQLException {
+	public <T> T selectOne(String sql, Class<T> clazz, Object... params)
+			throws SQLException {
 		printlnSQL(sql, params);
-		T one = runner.query(connection, sql, new BeanHandler<T>(clazz), params);
+		T one = runner
+				.query(connection, sql, new BeanHandler<T>(clazz), params);
 		return one;
 	}
 
-	public Map<String, Object> selectOne(String sql, Object... params) throws SQLException {
+	public Map<String, Object> selectOne(String sql, Object... params)
+			throws SQLException {
 		printlnSQL(sql, params);
-		Map<String, Object> one = runner.query(connection, sql, new MapHandler(), params);
+		Map<String, Object> one = runner.query(connection, sql,
+				new MapHandler(), params);
 		return one;
 	}
 
 	@Override
 	public int count(String sql, Object... params) throws SQLException {
 		printlnSQL(sql, params);
-		String one = runner.query(connection, sql, new SingleValueHandler(), params);
+		String one = runner.query(connection, sql, new SingleValueHandler(),
+				params);
 		if (one == null) {
 			return 0;
 		} else {
@@ -135,12 +142,8 @@ public class DefaultForestGrower implements ForestGrower {
 	}
 
 	private void printlnSQL(String sql, Object... params) {
-		logger.debug(sql + "  params: " + Arrays
-				.asList(params == null ? new Object[] {} : params));
-	}
-
-	public Connection getConnection() {
-		return connection;
+		logger.debug(sql + "  params: "
+				+ Arrays.asList(params == null ? new Object[] {} : params));
 	}
 
 	@Override
@@ -153,6 +156,15 @@ public class DefaultForestGrower implements ForestGrower {
 			// }
 			connection.close();
 		}
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	@Override
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 
 }

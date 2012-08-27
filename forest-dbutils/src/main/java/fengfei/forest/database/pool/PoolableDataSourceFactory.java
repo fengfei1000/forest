@@ -6,12 +6,9 @@ import javax.sql.DataSource;
 
 public interface PoolableDataSourceFactory {
 
-	DataSource createDataSource(
-			String driverClass,
-			String url,
-			String user,
-			String password,
-			Map<String, String> params);
+	DataSource createDataSource(String driverClass, String url, String user,
+			String password, Map<String, String> params)
+			throws PoolableException;
 
-	public void destory(DataSource dataSource);
+	public void destory(DataSource dataSource) throws PoolableException;
 }
