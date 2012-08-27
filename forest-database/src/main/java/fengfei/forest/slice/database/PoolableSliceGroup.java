@@ -17,16 +17,18 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 
 	private Map<String, DataSource> pooledDataSources = new ConcurrentHashMap<>();
 	private ConnectonUrlMaker urlMaker;
-	private PoolableDataSourceFactory dataSourceFactory;
+	private PoolableDataSourceFactory poolableDataSourceFactory;
 
 	public PoolableSliceGroup(DatabaseSliceGroupFactory factory, String unitName) {
 		this(factory, null, unitName);
 	}
 
-	public PoolableSliceGroup(DatabaseSliceGroupFactory factory,
-			SlicePlotter<Source> plotter, String unitName) {
+	public PoolableSliceGroup(
+			DatabaseSliceGroupFactory factory,
+			SlicePlotter<Source> plotter,
+			String unitName) {
 		super(factory, plotter, unitName);
-		this.dataSourceFactory = factory.getPoolableDataSourceFactory(unitName);
+		this.poolableDataSourceFactory = factory.getPoolableDataSourceFactory(unitName);
 		this.urlMaker = factory.getConnectonUrlMaker(unitName);
 	}
 
@@ -35,8 +37,7 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 		return getDataSource(slice);
 	}
 
-	public DataSource getDataSource(Source key, Function function)
-			throws SliceException {
+	public DataSource getDataSource(Source key, Function function) throws SliceException {
 		ServerSlice slice = get(key, function);
 		return getDataSource(slice);
 	}
@@ -51,15 +52,13 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 				return dataSource.getConnection();
 			} catch (SQLException e) {
 
-				throw new SliceException("Can't get connection for slice "
-						+ slice, e);
+				throw new SliceException("Can't get connection for slice " + slice, e);
 			}
 		}
 
 	}
 
-	public Connection getConnection(Source key, Function function)
-			throws SliceException {
+	public Connection getConnection(Source key, Function function) throws SliceException {
 		ServerSlice slice = get(key, function);
 		DataSource dataSource = getDataSource(slice);
 		if (dataSource == null) {
@@ -70,7 +69,8 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 			} catch (SQLException e) {
 				throw new SliceException(String.format(
 						"Can't get connection by Function(%s), for slice %s",
-						function.name(), slice), e);
+						function.name(),
+						slice), e);
 			}
 		}
 	}
@@ -80,25 +80,32 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 		DataSource dataSource = pooledDataSources.get(url);
 		if (dataSource == null) {
 			try {
-				dataSource = dataSourceFactory.createDataSource(
-						slice.getDriverClass(), url, slice.getUsername(),
-						slice.getPassword(), slice.getExtraInfo());
+				dataSource = poolableDataSourceFactory.createDataSource(
+						slice.getDriverClass(),
+						url,
+						slice.getUsername(),
+						slice.getPassword(),
+						slice.getExtraInfo());
 				pooledDataSources.put(url, dataSource);
 			} catch (PoolableException e) {
 
-				throw new SliceException(
-						"Can't create datasource for the slice " + slice, e);
+				throw new SliceException("Can't create datasource for the slice " + slice, e);
 			}
 		}
 		return dataSource;
 	}
 
+	public Map<String, DataSource> allPooledDataSources() {
+		return pooledDataSources;
+	}
+
+	public PoolableDataSourceFactory getPoolableDataSourceFactory() {
+		return poolableDataSourceFactory;
+	}
+
 	@Override
 	public String toString() {
-		return "PoolableSliceGroup [pooledDataSources=" + pooledDataSources
-				+ ", urlMaker=" + urlMaker + ", dataSourceFactory="
-				+ dataSourceFactory + ", sliceGroup=" + sliceGroup
-				+ ", plotter=" + plotter + ", overType=" + overType + "]";
+		return "PoolableSliceGroup [pooledDataSources=" + pooledDataSources + ", urlMaker=" + urlMaker + ", poolableDataSourceFactory=" + poolableDataSourceFactory + ", sliceGroup=" + sliceGroup + ", plotter=" + plotter + ", overType=" + overType + "]";
 	}
 
 }

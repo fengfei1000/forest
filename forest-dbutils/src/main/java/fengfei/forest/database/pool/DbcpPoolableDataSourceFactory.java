@@ -22,21 +22,33 @@ public class DbcpPoolableDataSourceFactory implements PoolableDataSourceFactory 
 			.getLogger(DbcpPoolableDataSourceFactory.class);
 
 	@Override
-	public DataSource createDataSource(String driverClass, String url,
-			String user, String password, Map<String, String> params)
-			throws PoolableException {
+	public DataSource createDataSource(
+			String driverClass,
+			String url,
+			String user,
+			String password,
+			Map<String, String> params) throws PoolableException {
 
 		DataSource ds = null;
 		ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
-				url, user, password);
+				url,
+				user,
+				password);
 		try {
 			AbandonedConfig conf = new AbandonedConfig();
-			conf.setLogAbandoned(ParamsUtils.getDefaultBoolean(params,
-					"logAbandoned", false));
-			conf.setRemoveAbandoned(ParamsUtils.getDefaultBoolean(params,
-					"removeAbandoned", false));
-			conf.setRemoveAbandonedTimeout(ParamsUtils.getDefaultInt(params,
-					"removeAbandonedTimeout", 60));
+			conf
+					.setLogAbandoned(ParamsUtils.getDefaultBoolean(
+							params,
+							"logAbandoned",
+							false));
+			conf.setRemoveAbandoned(ParamsUtils.getDefaultBoolean(
+					params,
+					"removeAbandoned",
+					false));
+			conf.setRemoveAbandonedTimeout(ParamsUtils.getDefaultInt(
+					params,
+					"removeAbandonedTimeout",
+					60));
 			ObjectPool connectionPool = null;
 			// if (conf.getLogAbandoned() && conf.getRemoveAbandoned()) {
 			// for watch connections
@@ -44,8 +56,11 @@ public class DbcpPoolableDataSourceFactory implements PoolableDataSourceFactory 
 			BeanUtils.copyProperties(connectionPool, params);
 
 			// }
-			new PoolableConnectionFactory(connectionFactory, connectionPool,
-					null, ParamsUtils.getValidationQuery(params),
+			new PoolableConnectionFactory(
+					connectionFactory,
+					connectionPool,
+					null,
+					ParamsUtils.getValidationQuery(params),
 					ParamsUtils.getDefaultBoolean(params, "defaultReadOnly"),
 					ParamsUtils.getDefaultBoolean(params, "defaultAutoCommit"),
 					conf);
@@ -53,8 +68,7 @@ public class DbcpPoolableDataSourceFactory implements PoolableDataSourceFactory 
 
 		} catch (Exception e) {
 			logger.error("create DBCP ClosablePoolingDataSource error", e);
-			throw new PoolableException(
-					"create DBCP ClosablePoolingDataSource error", e);
+			throw new PoolableException("create DBCP ClosablePoolingDataSource error", e);
 
 		}
 
@@ -64,12 +78,14 @@ public class DbcpPoolableDataSourceFactory implements PoolableDataSourceFactory 
 
 	@Override
 	public void destory(DataSource dataSource) throws PoolableException {
+		if (dataSource == null) {
+			return;
+		}
 		try {
 			ClosablePoolingDataSource ds = (ClosablePoolingDataSource) dataSource;
 			ds.close();
 		} catch (Throwable e) {
-			throw new PoolableException(
-					"destory DBCP ClosablePoolingDataSource error", e);
+			throw new PoolableException("destory DBCP ClosablePoolingDataSource error", e);
 		}
 
 	}

@@ -10,6 +10,7 @@ import fengfei.forest.database.pool.BonePoolableDataSourceFactory;
 import fengfei.forest.database.pool.DbcpPoolableDataSourceFactory;
 import fengfei.forest.database.pool.PoolableDataSourceFactory;
 import fengfei.forest.database.pool.TomcatPoolableDataSourceFactory;
+import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SlicePlotter;
 import fengfei.forest.slice.config.xml.GroupConfig;
 import fengfei.forest.slice.exception.NonExistedSliceException;
@@ -25,6 +26,8 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 	public static final String POOL_DBCP = "DBCP";
 	public static final String POOL_TOMCAT_JDBC = "TomcatJDBC";
 	protected static Map<String, Class<? extends ConnectonUrlMaker>> connectonUrlMakerClazz = new HashMap<>();
+	protected Map<String, PoolableSliceGroup<?>> poolableSliceGroupCache = new HashMap<>();
+	protected Map<String, DatabaseSliceGroup<?>> databaseSliceGroupCache = new HashMap<>();
 	static {
 
 		registerDriver("oracle.jdbc.driver.OracleDriver", OracleThinConnectonUrlMaker.class);
@@ -34,24 +37,65 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 
 	}
 
+	public Map<String, DatabaseSliceGroup<?>> allDatabaseSliceGroups() {
+		return databaseSliceGroupCache;
+	}
+
+	public Map<String, PoolableSliceGroup<?>> allPoolableSliceGroup() {
+		return poolableSliceGroupCache;
+	}
+
 	public <Source> DatabaseSliceGroup<Source> getDatabaseSliceGroup(
 			SlicePlotter<Source> plotter,
 			String unitName) {
-		return new DatabaseSliceGroup<>(this, plotter, unitName);
+		@SuppressWarnings("unchecked")
+		DatabaseSliceGroup<Source> group = (DatabaseSliceGroup<Source>) databaseSliceGroupCache
+				.get(unitName);
+		if (group == null) {
+			group = new DatabaseSliceGroup<>(this, plotter, unitName);
+			databaseSliceGroupCache.put(unitName, group);
+		}
+
+		return group;
+	}
+
+	public <Source> DatabaseSliceGroup<Source> getDatabaseSliceGroup(String unitName) {
+
+		@SuppressWarnings("unchecked")
+		PoolableSliceGroup<Source> group = (PoolableSliceGroup<Source>) databaseSliceGroupCache
+				.get(unitName);
+		if (group == null) {
+			group = new PoolableSliceGroup<>(this, unitName);
+			databaseSliceGroupCache.put(unitName, group);
+		}
+
+		return group;
 	}
 
 	public <Source> PoolableSliceGroup<Source> getPoolableSliceGroup(
 			SlicePlotter<Source> plotter,
 			String unitName) {
-		return new PoolableSliceGroup<>(this, plotter, unitName);
-	}
+		@SuppressWarnings("unchecked")
+		PoolableSliceGroup<Source> group = (PoolableSliceGroup<Source>) poolableSliceGroupCache
+				.get(unitName);
+		if (group == null) {
+			group = new PoolableSliceGroup<>(this, plotter, unitName);
+			poolableSliceGroupCache.put(unitName, group);
+		}
 
-	public <Source> DatabaseSliceGroup<Source> getDatabaseSliceGroup(String unitName) {
-		return new DatabaseSliceGroup<>(this, unitName);
+		return group;
 	}
 
 	public <Source> PoolableSliceGroup<Source> getPoolableSliceGroup(String unitName) {
-		return new PoolableSliceGroup<>(this, unitName);
+		@SuppressWarnings("unchecked")
+		PoolableSliceGroup<Source> group = (PoolableSliceGroup<Source>) poolableSliceGroupCache
+				.get(unitName);
+		if (group == null) {
+			group = new PoolableSliceGroup<>(this, unitName);
+			poolableSliceGroupCache.put(unitName, group);
+		}
+
+		return group;
 	}
 
 	public PoolableDataSourceFactory getPoolableDataSourceFactory(String unitName) {

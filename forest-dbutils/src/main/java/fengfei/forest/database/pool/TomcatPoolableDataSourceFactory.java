@@ -11,16 +11,18 @@ import org.slf4j.LoggerFactory;
 
 import fengfei.forest.database.utils.ParamsUtils;
 
-public class TomcatPoolableDataSourceFactory implements
-		PoolableDataSourceFactory {
+public class TomcatPoolableDataSourceFactory implements PoolableDataSourceFactory {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(TomcatPoolableDataSourceFactory.class);
 
 	@Override
-	public DataSource createDataSource(String driverClass, String url,
-			String user, String password, Map<String, String> params)
-			throws PoolableException {
+	public DataSource createDataSource(
+			String driverClass,
+			String url,
+			String user,
+			String password,
+			Map<String, String> params) throws PoolableException {
 
 		org.apache.tomcat.jdbc.pool.DataSource ds = null;
 		try {
@@ -31,16 +33,21 @@ public class TomcatPoolableDataSourceFactory implements
 			poolProperties.setPassword(password);
 
 			poolProperties.setLogAbandoned(ParamsUtils.getDefaultBoolean(
-					params, "logAbandoned", false));
+					params,
+					"logAbandoned",
+					false));
 			poolProperties.setRemoveAbandoned(ParamsUtils.getDefaultBoolean(
-					params, "removeAbandoned", false));
+					params,
+					"removeAbandoned",
+					false));
 			poolProperties.setRemoveAbandonedTimeout(ParamsUtils.getDefaultInt(
-					params, "removeAbandonedTimeout", 60));
+					params,
+					"removeAbandonedTimeout",
+					60));
 			BeanUtils.copyProperties(poolProperties, params);
 
 			poolProperties
-					.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
-							+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+					.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;" + "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
 			ds = new org.apache.tomcat.jdbc.pool.DataSource();
 			ds.setPoolProperties(poolProperties);
 		} catch (Exception e) {
@@ -54,6 +61,9 @@ public class TomcatPoolableDataSourceFactory implements
 
 	@Override
 	public void destory(DataSource dataSource) throws PoolableException {
+		if (dataSource == null) {
+			return;
+		}
 		try {
 			org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) dataSource;
 			ds.close();
