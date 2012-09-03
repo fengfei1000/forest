@@ -81,5 +81,10 @@
 			<type>maven-plugin</type>
 			<scope>test</scope>
 		</dependency> -->
+		<dependency>
+			<groupId>fengfei.berain</groupId>
+			<artifactId>berain-client</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

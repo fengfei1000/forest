@@ -7,9 +7,9 @@ import fengfei.forest.slice.exception.ErrorSliceConfigException;
 
 public interface SliceReader<T> {
 
-    T read(String filePath) throws ErrorSliceConfigException;
+    T read(String path) throws ErrorSliceConfigException;
 
     T read(InputStream in) throws ErrorSliceConfigException;
 
-    Config readConfig(InputStream in) throws ErrorSliceConfigException;
+    Config readConfig(String path) throws ErrorSliceConfigException;
 }

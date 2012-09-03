@@ -1,6 +1,9 @@
 package fengfei.forest.slice.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -9,11 +12,11 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fengfei.forest.example.XmlMain;
 import fengfei.forest.slice.Slice;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.config.xml.XmlSliceReader;
+
 @Ignore
 public class AccuracySliceGroupTest extends BaseSliceTest {
 
@@ -26,7 +29,7 @@ public class AccuracySliceGroupTest extends BaseSliceTest {
 
 	@BeforeClass
 	public static void setup() {
-		InputStream in = XmlMain.class.getClassLoader().getResourceAsStream(
+		InputStream in = AccuracySliceGroupTest.class.getClassLoader().getResourceAsStream(
 				"config/AccuracySliceGroupTestConfig.xml");
 		SliceReader<SliceGroupFactory> reader = new XmlSliceReader();
 		factory = reader.read(in);

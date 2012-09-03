@@ -14,19 +14,19 @@ import fengfei.forest.slice.config.SliceKind;
 public class SliceConfig {
 
 	@Attribute(required = false)
-	protected String id;
+	public String id;
 
 	@Attribute(required = false, empty = "Logical")
-	protected String kind;
+	public String kind;
 
 	@Attribute(required = false)
-	protected int weight = 1;
+	public int weight = 1;
 
 	@Attribute(required = false)
-	protected String func;
+	public String func;
 
 	@Element(required = false, name = "sourceKey")
-	private String sourceKey;
+	public String sourceKey;
 
 	@ElementMap(
 			entry = "property",
@@ -35,13 +35,13 @@ public class SliceConfig {
 			key = "key",
 			value = "value",
 			required = false)
-	private Map<String, String> extraInfo;
+	public Map<String, String> extraInfo;
 
 	@ElementList(entry = "slice", inline = true, required = false)
-	private List<SliceConfig> subSlices;
+	public List<SliceConfig> subSlices;
 
 	@Element(name = "subGroup", required = false)
-	private GroupConfig subGroup;
+	public GroupConfig subGroup;
 
 	public SliceKind getSliceKind() {
 		return SliceKind.find(kind);

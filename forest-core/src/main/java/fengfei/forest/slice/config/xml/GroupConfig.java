@@ -23,28 +23,28 @@ import fengfei.forest.slice.impl.NavigableSliceGroup.NavigationType;
 public class GroupConfig implements Cloneable {
 
     @Attribute
-    private String id;
+    public String id;
     @Element(required = false)
-    private String plotterClass;
+    public String plotterClass;
     @Attribute(required = false)
-    private String type;
+    public String type;
     @Attribute(name = "extends", required = false)
-    private String parentId;
+    public String parentId;
 
     @Element(required = false)
-    protected String over = OverType.Last.name();
+    public String over = OverType.Last.name();
     @Element(required = false)
-    private String unitSuffix = "_";
+    public String unitSuffix = "_";
     @Element(required = false)
-    protected String funcType;
+    public String funcType;
     @Element(required = false)
-    protected String navigationType = NavigationType.Floor.name();
+    public String navigationType = NavigationType.Floor.name();
     @Element(required = false)
-    protected String algorithmType = SliceAlgorithmType.Loop.name();
+    public String algorithmType = SliceAlgorithmType.Loop.name();
     @ElementMap(attribute = true, key = "key", value = "value", required = false)
-    private Map<String, String> defaultExtraInfo = new HashMap<>();
+    public Map<String, String> defaultExtraInfo = new HashMap<>();
     @ElementList(name = "slices", required = false)
-    private Set<SliceConfig> slices = new HashSet<>();
+    public Set<SliceConfig> slices = new HashSet<>();
 
     public GroupConfig() {
     }

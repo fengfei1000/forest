@@ -141,7 +141,7 @@ public class SliceConfigReader<T extends SliceConfig> implements SliceReader<T> 
     }
 
     @Override
-    public Config readConfig(InputStream in) throws ErrorSliceConfigException {
+    public Config readConfig(String path) throws ErrorSliceConfigException {
         // TODO Auto-generated method stub
         return null;
     }
