@@ -1,11 +1,10 @@
 package fengfei.forest.example;
 
-import java.io.InputStream;
+import java.net.URL;
 
 import javax.sql.DataSource;
 
 import fengfei.forest.slice.Function;
-import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SliceReader;
 import fengfei.forest.slice.config.xml.Config;
 import fengfei.forest.slice.config.xml.XmlSliceReader;
@@ -21,14 +20,15 @@ public class Unit1Main {
      */
     public static void main(String[] args) throws Exception {
 
-        InputStream in = Unit1Main.class.getClassLoader().getResourceAsStream("config/config.xml");
-        SliceReader<SliceGroupFactory> reader = new XmlSliceReader();
-        Config config = reader.readConfig(in);
+		URL url = Unit1Main.class.getClassLoader().getResource(
+				"config/config.xml");
+		SliceReader<SliceGroupFactory> reader = new XmlSliceReader();
+		SliceGroupFactory factory = new SliceGroupFactory();
+		Config config = reader.readConfig(url.getFile());
         System.out.println(config);
         String unitName = "unit1";
         DatabaseSliceGroupFactory groupFactory = new DatabaseSliceGroupFactory();
         groupFactory.config(config);
-        in.close();
         PoolableSliceGroup<Long> group = groupFactory.getPoolableSliceGroup(unitName);
         System.out.println(group);
         DataSource dataSource = group.getDataSource(1l);
