@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import fengfei.forest.database.dbutils.impl.ForestRunner.InsertResultSet;
+
 public interface ForestGrower {
 
 	<T> List<T> select(String sql, Transducer<T> transducer, Object... params)
@@ -28,6 +30,12 @@ public interface ForestGrower {
 	int count(String sql, Object... params) throws SQLException;
 
 	int update(String sql, Object... params) throws SQLException;
+
+	InsertResultSet<Long> insert(String sql, Object... params)
+			throws SQLException;
+
+	public InsertResultSet<Integer> insertForInt(String sql, Object... params)
+			throws SQLException;
 
 	int batchUpdate(String sql, Object[]... params) throws SQLException;
 

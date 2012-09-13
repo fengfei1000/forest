@@ -19,13 +19,14 @@ import fengfei.forest.database.dbutils.ListHandler;
 import fengfei.forest.database.dbutils.OneBeanHandler;
 import fengfei.forest.database.dbutils.SingleValueHandler;
 import fengfei.forest.database.dbutils.Transducer;
+import fengfei.forest.database.dbutils.impl.ForestRunner.InsertResultSet;
 
 public class DefaultForestGrower implements ForestGrower {
 
 	private static Logger logger = LoggerFactory
 			.getLogger(DefaultForestGrower.class);
 	private Connection connection;
-	private QueryRunner runner;
+	private ForestRunner runner;
 
 	public DefaultForestGrower(Connection connection) {
 		runner = new ForestRunner();
@@ -106,6 +107,34 @@ public class DefaultForestGrower implements ForestGrower {
 		int ct = runner.update(connection, sql, params);
 		connection.setReadOnly(isReadOnly);
 		return ct;
+	}
+
+	@Override
+	public InsertResultSet<Long> insert(String sql, Object... params)
+			throws SQLException {
+		printlnSQL(sql, params);
+
+		boolean isReadOnly = connection.isReadOnly();
+		connection.setReadOnly(false);
+		InsertResultSet<Long> irs = runner.insertForLong(connection, sql,
+				params);
+		connection.setReadOnly(isReadOnly);
+
+		return irs;
+	}
+
+	@Override
+	public InsertResultSet<Integer> insertForInt(String sql, Object... params)
+			throws SQLException {
+		printlnSQL(sql, params);
+
+		boolean isReadOnly = connection.isReadOnly();
+		connection.setReadOnly(false);
+		InsertResultSet<Integer> irs = runner.insertForInt(connection, sql,
+				params);
+		connection.setReadOnly(isReadOnly);
+
+		return irs;
 	}
 
 	@Override
