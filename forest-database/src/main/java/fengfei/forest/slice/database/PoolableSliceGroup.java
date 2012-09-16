@@ -1,7 +1,5 @@
 package fengfei.forest.slice.database;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,77 +21,83 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 		this(factory, null, unitName);
 	}
 
-	public PoolableSliceGroup(
-			DatabaseSliceGroupFactory factory,
-			SlicePlotter<Source> plotter,
-			String unitName) {
+	public PoolableSliceGroup(DatabaseSliceGroupFactory factory,
+			SlicePlotter<Source> plotter, String unitName) {
 		super(factory, plotter, unitName);
-		this.poolableDataSourceFactory = factory.getPoolableDataSourceFactory(unitName);
+		this.poolableDataSourceFactory = factory
+				.getPoolableDataSourceFactory(unitName);
 		this.urlMaker = factory.getConnectonUrlMaker(unitName);
 	}
 
-	public DataSource getDataSource(Source key) throws SliceException {
+	public PoolableServerSlice getPoolableServerSlice(Source key)
+			throws SliceException {
 		ServerSlice slice = get(key);
-		return getDataSource(slice);
+		return getPoolableServerSlice(slice);
 	}
 
-	public DataSource getDataSource(Source key, Function function) throws SliceException {
+	public PoolableServerSlice getPoolableServerSlice(Source key,
+			Function function) throws SliceException {
 		ServerSlice slice = get(key, function);
-		return getDataSource(slice);
+		return getPoolableServerSlice(slice);
 	}
 
-	public Connection getConnection(Source key) throws SliceException {
-		ServerSlice slice = get(key);
-		DataSource dataSource = getDataSource(slice);
-		if (dataSource == null) {
-			throw new SliceException("");
-		} else {
-			try {
-				return dataSource.getConnection();
-			} catch (SQLException e) {
-
-				throw new SliceException("Can't get connection for slice " + slice, e);
-			}
-		}
-
-	}
-
-	public Connection getConnection(Source key, Function function) throws SliceException {
-		ServerSlice slice = get(key, function);
-		DataSource dataSource = getDataSource(slice);
-		if (dataSource == null) {
-			throw new SliceException("");
-		} else {
-			try {
-				return dataSource.getConnection();
-			} catch (SQLException e) {
-				throw new SliceException(String.format(
-						"Can't get connection by Function(%s), for slice %s",
-						function.name(),
-						slice), e);
-			}
-		}
-	}
-
-	protected DataSource getDataSource(ServerSlice slice) throws SliceException {
+	private PoolableServerSlice getPoolableServerSlice(ServerSlice slice)
+			throws SliceException {
 		String url = urlMaker.makeUrl(slice);
 		DataSource dataSource = pooledDataSources.get(url);
 		if (dataSource == null) {
 			try {
 				dataSource = poolableDataSourceFactory.createDataSource(
-						slice.getDriverClass(),
-						url,
-						slice.getUsername(),
-						slice.getPassword(),
-						slice.getExtraInfo());
+						slice.getDriverClass(), url, slice.getUsername(),
+						slice.getPassword(), slice.getExtraInfo());
 				pooledDataSources.put(url, dataSource);
 			} catch (PoolableException e) {
-
-				throw new SliceException("Can't create datasource for the slice " + slice, e);
+				throw new SliceException(
+						"Can't create datasource for the slice " + slice, e);
 			}
 		}
-		return dataSource;
+		if (dataSource == null) {
+			throw new SliceException("Can't get datasource for the slice"
+					+ slice);
+		}
+		PoolableServerSlice poolableServerSlice = new PoolableServerSlice(
+				slice, dataSource);
+		return poolableServerSlice;
 	}
+
+	//
+	// public Connection getConnection(Source key) throws SliceException {
+	// ServerSlice slice = get(key);
+	// DataSource dataSource = getDataSource(slice);
+	// if (dataSource == null) {
+	// throw new SliceException("");
+	// } else {
+	// try {
+	// return dataSource.getConnection();
+	// } catch (SQLException e) {
+	//
+	// throw new SliceException("Can't get connection for slice "
+	// + slice, e);
+	// }
+	// }
+	// }
+	//
+	// public Connection getConnection(Source key, Function function)
+	// throws SliceException {
+	// ServerSlice slice = get(key, function);
+	// DataSource dataSource = getDataSource(slice);
+	// if (dataSource == null) {
+	// throw new SliceException("");
+	// } else {
+	// try {
+	// return dataSource.getConnection();
+	// } catch (SQLException e) {
+	// throw new SliceException(String.format(
+	// "Can't get connection by Function(%s), for slice %s",
+	// function.name(), slice), e);
+	// }
+	// }
+	// }
 
 	public Map<String, DataSource> allPooledDataSources() {
 		return pooledDataSources;
@@ -105,7 +109,10 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 
 	@Override
 	public String toString() {
-		return "PoolableSliceGroup [pooledDataSources=" + pooledDataSources + ", urlMaker=" + urlMaker + ", poolableDataSourceFactory=" + poolableDataSourceFactory + ", sliceGroup=" + sliceGroup + ", plotter=" + plotter + ", overType=" + overType + "]";
+		return "PoolableSliceGroup [pooledDataSources=" + pooledDataSources
+				+ ", urlMaker=" + urlMaker + ", poolableDataSourceFactory="
+				+ poolableDataSourceFactory + ", sliceGroup=" + sliceGroup
+				+ ", plotter=" + plotter + ", overType=" + overType + "]";
 	}
 
 }
