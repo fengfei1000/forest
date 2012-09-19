@@ -38,7 +38,7 @@ public class BerainReader implements SliceReader<SliceGroupFactory> {
 		return null;
 	}
 
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		Field[] fs = GroupConfig.class.getDeclaredFields();
 		for (int i = 0; i < fs.length; i++) {
 
@@ -101,13 +101,14 @@ public class BerainReader implements SliceReader<SliceGroupFactory> {
 		List<BerainEntry> slicesPe = client.nextChildren(path);
 		for (BerainEntry sbe : slicesPe) {
 			SliceConfig sliceConfig = new SliceConfig();
+			String value = sbe.value;
 			sliceConfig.id = sbe.key;
 			sliceConfig.weight = sbe.intValue();
 			BerainEntry sourceKeyBe = client.getFull(sbe.path + "/sourceKey");
 			sliceConfig.sourceKey = sourceKeyBe.value;
 			List<BerainEntry> subs = client.nextChildren(path + "/slice");
 			for (BerainEntry sube : subs) {
-				
+
 			}
 
 			sliceConfigs.add(sliceConfig);
@@ -116,4 +117,58 @@ public class BerainReader implements SliceReader<SliceGroupFactory> {
 		return sliceConfigs;
 	}
 
+	private SliceConfig parseSliceConfigValue(BerainEntry sbe) {
+		SliceConfig sliceConfig = new SliceConfig();
+		sliceConfig.id = sbe.key;
+		Map<String, String> kvs = parseSliceConfigValue(sbe.value);
+		sliceConfig.weight = getInt(kvs, "weight", 1);
+		sliceConfig.kind = kvs.get("kind");
+		sliceConfig.func = kvs.get("func");
+		sliceConfig.sourceKey = kvs.get("sourceKey");
+		return sliceConfig;
+	}
+
+	private int getInt(Map<String, String> map, String key, int defalultValue) {
+		String value = map.get(key);
+		if (value == null) {
+			return defalultValue;
+		} else {
+			return Integer.parseInt(value);
+		}
+	}
+
+	private Map<String, String> parseSliceConfigValue(String value) {
+		Map<String, String> kvs = new HashMap<>();
+		String[] strs = value.split("[\r\n|\n]");
+		if (strs == null || strs.length <= 0) {
+			return kvs;
+		}
+		for (String str : strs) {
+			if (str.trim().equals("")) {
+				continue;
+			}
+			String kv[] = str.split("=");
+			if (kv.length >= 2) {
+				kvs.put(kv[0], kv[1]);
+			}
+		}
+		return kvs;
+	}
+
+	public static void main(String[] args) {
+		Map<String, String> kvs = new HashMap<>();
+		String str = "k1=v1\nk2=v2\n\rk3=v3";
+		String[] s = str.split("[\r\n|\n]");
+		for (String sf : s) {
+			if (sf.trim().equals("")) {
+				continue;
+			}
+			String kv[] = sf.split("=");
+			if (kv.length >= 2) {
+				kvs.put(kv[0], kv[1]);
+			}
+
+		}
+		System.out.println(kvs);
+	}
 }

@@ -10,7 +10,6 @@ import fengfei.forest.database.pool.BonePoolableDataSourceFactory;
 import fengfei.forest.database.pool.DbcpPoolableDataSourceFactory;
 import fengfei.forest.database.pool.PoolableDataSourceFactory;
 import fengfei.forest.database.pool.TomcatPoolableDataSourceFactory;
-import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SlicePlotter;
 import fengfei.forest.slice.config.xml.GroupConfig;
 import fengfei.forest.slice.exception.NonExistedSliceException;
@@ -30,10 +29,12 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 	protected Map<String, DatabaseSliceGroup<?>> databaseSliceGroupCache = new HashMap<>();
 	static {
 
-		registerDriver("oracle.jdbc.driver.OracleDriver", OracleThinConnectonUrlMaker.class);
+		registerDriver("oracle.jdbc.driver.OracleDriver",
+				OracleThinConnectonUrlMaker.class);
 		registerDriver("org.gjt.mm.mysql.Driver", MysqlConnectonUrlMaker.class);
 		registerDriver("com.mysql.jdbc.Driver", MysqlConnectonUrlMaker.class);
-		registerDriver("org.postgresql.Driver", PostgreSQLConnectonUrlMaker.class);
+		registerDriver("org.postgresql.Driver",
+				PostgreSQLConnectonUrlMaker.class);
 
 	}
 
@@ -46,8 +47,7 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 	}
 
 	public <Source> DatabaseSliceGroup<Source> getDatabaseSliceGroup(
-			SlicePlotter<Source> plotter,
-			String unitName) {
+			SlicePlotter<Source> plotter, String unitName) {
 		@SuppressWarnings("unchecked")
 		DatabaseSliceGroup<Source> group = (DatabaseSliceGroup<Source>) databaseSliceGroupCache
 				.get(unitName);
@@ -59,7 +59,8 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 		return group;
 	}
 
-	public <Source> DatabaseSliceGroup<Source> getDatabaseSliceGroup(String unitName) {
+	public <Source> DatabaseSliceGroup<Source> getDatabaseSliceGroup(
+			String unitName) {
 
 		@SuppressWarnings("unchecked")
 		PoolableSliceGroup<Source> group = (PoolableSliceGroup<Source>) databaseSliceGroupCache
@@ -73,8 +74,7 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 	}
 
 	public <Source> PoolableSliceGroup<Source> getPoolableSliceGroup(
-			SlicePlotter<Source> plotter,
-			String unitName) {
+			SlicePlotter<Source> plotter, String unitName) {
 		@SuppressWarnings("unchecked")
 		PoolableSliceGroup<Source> group = (PoolableSliceGroup<Source>) poolableSliceGroupCache
 				.get(unitName);
@@ -86,7 +86,8 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 		return group;
 	}
 
-	public <Source> PoolableSliceGroup<Source> getPoolableSliceGroup(String unitName) {
+	public <Source> PoolableSliceGroup<Source> getPoolableSliceGroup(
+			String unitName) {
 		@SuppressWarnings("unchecked")
 		PoolableSliceGroup<Source> group = (PoolableSliceGroup<Source>) poolableSliceGroupCache
 				.get(unitName);
@@ -98,7 +99,8 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 		return group;
 	}
 
-	public PoolableDataSourceFactory getPoolableDataSourceFactory(String unitName) {
+	public PoolableDataSourceFactory getPoolableDataSourceFactory(
+			String unitName) {
 		GroupConfig group = groupConfigCache.get(unitName);
 
 		if (group == null) {
@@ -123,8 +125,7 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 
 	}
 
-	public static void registerDriver(
-			String driverName,
+	public static void registerDriver(String driverName,
 			Class<? extends ConnectonUrlMaker> clazz) {
 		connectonUrlMakerClazz.put(driverName, clazz);
 	}
@@ -137,9 +138,11 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 		}
 		Map<String, String> info = group.getDefaultExtraInfo();
 		String driverName = info.get(ServerSlice.KEY_DRIVER_CLASS);
-		Class<? extends ConnectonUrlMaker> clazz = connectonUrlMakerClazz.get(driverName);
+		Class<? extends ConnectonUrlMaker> clazz = connectonUrlMakerClazz
+				.get(driverName);
 		if (null == clazz) {
-			String msg = "Not registered ConnectonUrlMaker for driver: " + driverName;
+			String msg = "Not registered ConnectonUrlMaker for driver: "
+					+ driverName;
 			logger.error(msg);
 			throw new RuntimeException(msg);
 		}
