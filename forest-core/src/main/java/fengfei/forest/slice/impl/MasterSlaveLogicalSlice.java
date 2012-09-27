@@ -4,6 +4,7 @@ import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
 import fengfei.forest.slice.SliceAlgorithmType;
+import fengfei.forest.slice.exception.NoSupportedException;
 
 public class MasterSlaveLogicalSlice<Source> extends LogicalSlice<Source> {
 
@@ -20,7 +21,7 @@ public class MasterSlaveLogicalSlice<Source> extends LogicalSlice<Source> {
 	}
 
 	public void addSlice(Slice slice, Function function) {
-	    mergeInheritInfoTo(slice);
+		mergeInheritInfoTo(slice);
 		switch (function) {
 		case Master:
 			master.addSlice(slice);
@@ -36,7 +37,8 @@ public class MasterSlaveLogicalSlice<Source> extends LogicalSlice<Source> {
 			all.addSlice(slice);
 			break;
 		default:
-			break;
+			throw new NoSupportedException("Don't supported the function: "
+					+ function.name());
 		}
 	}
 
@@ -90,7 +92,12 @@ public class MasterSlaveLogicalSlice<Source> extends LogicalSlice<Source> {
 
 	@Override
 	public String toString() {
-		return "MasterSlaveLogicalSlice [master=" + master + ", slave=" + slave + ", all=" + all + ", subSliceGroup=" + subSliceGroup + ", algorithmType=" + algorithmType + ", id=" + id + ", suffix=" + suffix + ", extraInfo=" + extraInfo + ", weight=" + weight + ", status=" + status + ", isPhysical=" + isPhysical + "]";
+		return "MasterSlaveLogicalSlice [master=" + master + ", slave=" + slave
+				+ ", all=" + all + ", subSliceGroup=" + subSliceGroup
+				+ ", algorithmType=" + algorithmType + ", id=" + id
+				+ ", suffix=" + suffix + ", extraInfo=" + extraInfo
+				+ ", weight=" + weight + ", status=" + status + ", isPhysical="
+				+ isPhysical + "]";
 	}
 
 }

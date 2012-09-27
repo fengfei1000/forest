@@ -17,4 +17,9 @@ public class SliceRuntimeException extends RuntimeException {
 		super(description, throwable);
 
 	}
+
+	@Override
+	public synchronized Throwable fillInStackTrace() {
+		return null;
+	}
 }

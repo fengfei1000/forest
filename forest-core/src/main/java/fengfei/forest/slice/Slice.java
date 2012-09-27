@@ -7,72 +7,87 @@ import fengfei.forest.slice.model.Status;
 
 public abstract class Slice {
 
-    protected String id;
-    protected String suffix;
-    protected Map<String, String> extraInfo = new HashMap<>();
-    protected int weight;
-    protected Status status;
-    protected boolean isPhysical;
+	protected String id;
+	protected String suffix;
+	protected Map<String, String> extraInfo = new HashMap<>();
+	protected int weight;
+	protected Status status;
+	protected boolean isPhysical;
 
-    public void addExtraInfo(String key, String value) {
-        extraInfo.put(key, value);
-    }
+	public Slice() {
+	}
 
-    public String getId() {
-        return id;
-    }
+	public Slice(String id, String suffix, Map<String, String> extraInfo,
+			int weight, Status status, boolean isPhysical) {
+		super();
+		this.id = id;
+		this.suffix = suffix;
+		this.extraInfo = extraInfo;
+		this.weight = weight;
+		this.status = status;
+		this.isPhysical = isPhysical;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void addExtraInfo(String key, String value) {
+		extraInfo.put(key, value);
+	}
 
-    public String getSuffix() {
-        return suffix;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public Map<String, String> getExtraInfo() {
-        return extraInfo;
-    }
+	public String getSuffix() {
+		return suffix;
+	}
 
-    public void addExtraInfo(Map<String, String> extraInfo) {
-        if (extraInfo == null) {
-            return;
-        }
-        this.extraInfo.putAll(extraInfo);
-    }
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
 
-    public int getWeight() {
-        return weight;
-    }
+	public Map<String, String> getExtraInfo() {
+		return extraInfo;
+	}
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
+	public void addExtraInfo(Map<String, String> extraInfo) {
+		if (extraInfo == null) {
+			return;
+		}
+		this.extraInfo.putAll(extraInfo);
+	}
 
-    public Status getStatus() {
-        return status;
-    }
+	public int getWeight() {
+		return weight;
+	}
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
 
-    public boolean isPhysical() {
-        return isPhysical;
-    }
+	public Status getStatus() {
+		return status;
+	}
 
-    public void setPhysical(boolean isPhysical) {
-        this.isPhysical = isPhysical;
-    }
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
-    @Override
-    public String toString() {
-        return "\nSlice [id=" + id + ", suffix=" + suffix + ", extraInfo=" + extraInfo
-                + ", weight=" + weight + ", status=" + status + ", isPhysical=" + isPhysical + "]";
-    }
+	public boolean isPhysical() {
+		return isPhysical;
+	}
+
+	public void setPhysical(boolean isPhysical) {
+		this.isPhysical = isPhysical;
+	}
+
+	@Override
+	public String toString() {
+		return "\nSlice [id=" + id + ", suffix=" + suffix + ", extraInfo="
+				+ extraInfo + ", weight=" + weight + ", status=" + status
+				+ ", isPhysical=" + isPhysical + "]";
+	}
 
 }

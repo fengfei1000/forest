@@ -4,6 +4,7 @@ import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
 import fengfei.forest.slice.SliceAlgorithmType;
+import fengfei.forest.slice.exception.NoSupportedException;
 
 public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 
@@ -36,7 +37,8 @@ public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 			all.addSlice(slice);
 			break;
 		default:
-			break;
+			throw new NoSupportedException("Don't supported the function: "
+					+ function.name());
 		}
 	}
 
@@ -90,7 +92,12 @@ public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 
 	@Override
 	public String toString() {
-		return "ReadWriteLogicalSlice [read=" + read + ", write=" + write + ", all=" + all + ", subSliceGroup=" + subSliceGroup + ", algorithmType=" + algorithmType + ", id=" + id + ", suffix=" + suffix + ", extraInfo=" + extraInfo + ", weight=" + weight + ", status=" + status + ", isPhysical=" + isPhysical + "]";
+		return "ReadWriteLogicalSlice [read=" + read + ", write=" + write
+				+ ", all=" + all + ", subSliceGroup=" + subSliceGroup
+				+ ", algorithmType=" + algorithmType + ", id=" + id
+				+ ", suffix=" + suffix + ", extraInfo=" + extraInfo
+				+ ", weight=" + weight + ", status=" + status + ", isPhysical="
+				+ isPhysical + "]";
 	}
 
 }

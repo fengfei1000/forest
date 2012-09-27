@@ -8,8 +8,10 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
+import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SlicePlotter;
+import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 
 public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
@@ -25,13 +27,16 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 		super(plotter);
 	}
 
-	private Slice getSlice(
-			Map.Entry<Long, LogicalSlice<Source>> entry,
-			Source key,
-			Function function,
-			long id) {
+	public AccuracySliceGroup(SlicePlotter<Source> plotter,
+			FunctionType functionType, SliceAlgorithmType algorithmType) {
+		super(plotter, functionType, algorithmType);
+	}
+
+	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
+			Source key, Function function, long id) {
 		if (slices.size() == 0) {
-			throw new NonExistedSliceException("id=" + id + " non-existed slice.");
+			throw new NonExistedSliceException("id=" + id
+					+ " non-existed slice.");
 		}
 		if (entry == null || entry.getValue() == null) {
 			return dealOver(key, function, id);
@@ -44,9 +49,11 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 		return slice;
 	}
 
-	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry, Source key, long id) {
+	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
+			Source key, long id) {
 		if (slices.size() == 0) {
-			throw new NonExistedSliceException("id=" + id + " non-existed slice.");
+			throw new NonExistedSliceException("id=" + id
+					+ " non-existed slice.");
 		}
 		if (entry == null || entry.getValue() == null) {
 			return dealOver(key, null, id);
@@ -112,9 +119,8 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 
 	@Override
 	public String toString() {
-		return "AccuracySliceGroup [slices=" + slices + ", plotter=" + plotter + ", overType=" + overType + "]";
+		return "AccuracySliceGroup [slices=" + slices + ", plotter=" + plotter
+				+ ", overType=" + overType + "]";
 	}
-
-	 
 
 }

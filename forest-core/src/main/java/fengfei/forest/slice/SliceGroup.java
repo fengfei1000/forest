@@ -2,13 +2,19 @@ package fengfei.forest.slice;
 
 import java.util.Map;
 
+import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
+import fengfei.forest.slice.impl.EqualityLogicalSlice;
 import fengfei.forest.slice.impl.LongSlicePlotter;
+import fengfei.forest.slice.impl.MasterSlaveLogicalSlice;
+import fengfei.forest.slice.impl.ReadWriteLogicalSlice;
 
 public abstract class SliceGroup<Source> {
 
 	protected SlicePlotter<Source> plotter;
 	protected OverType overType = OverType.Last;
+	protected FunctionType functionType;
+	protected SliceAlgorithmType algorithmType;
 
 	@SuppressWarnings("unchecked")
 	public SliceGroup() {
@@ -18,6 +24,14 @@ public abstract class SliceGroup<Source> {
 	public SliceGroup(SlicePlotter<Source> plotter) {
 		this.plotter = plotter;
 
+	}
+
+	public SliceGroup(SlicePlotter<Source> plotter, FunctionType functionType,
+			SliceAlgorithmType algorithmType) {
+		super();
+		this.plotter = plotter;
+		this.functionType = functionType;
+		this.algorithmType = algorithmType;
 	}
 
 	public abstract Slice get(Source key, Function function);
@@ -47,17 +61,16 @@ public abstract class SliceGroup<Source> {
 			return null;
 
 		case Exception:
-			throw new NonExistedSliceException("id=" + id + " non-existed slice.");
+			throw new NonExistedSliceException("id=" + id
+					+ " non-existed slice.");
 		default:
-			throw new NonExistedSliceException("id=" + id + " non-existed slice.");
+			throw new NonExistedSliceException("id=" + id
+					+ " non-existed slice.");
 		}
 	}
 
-	protected Slice getSlice(
-			LogicalSlice<Source> logicSlice,
-			Source key,
-			Function function,
-			long id) {
+	protected Slice getSlice(LogicalSlice<Source> logicSlice, Source key,
+			Function function, long id) {
 
 		if (logicSlice == null) {
 			return dealOver(key, function, id);
@@ -69,7 +82,8 @@ public abstract class SliceGroup<Source> {
 		return slice;
 	}
 
-	protected Slice getSlice(LogicalSlice<Source> logicSlice, Source key, long id) {
+	protected Slice getSlice(LogicalSlice<Source> logicSlice, Source key,
+			long id) {
 		if (logicSlice == null) {
 			return dealOver(key, null, id);
 		}
@@ -84,6 +98,43 @@ public abstract class SliceGroup<Source> {
 		getSlices().put(id, slice);
 	}
 
+	public void addSlice(long id, Slice slice) {
+		addSlice(id, slice, Function.Any);
+	}
+
+	public void addSlice(long id, Slice slice, Function function) {
+		LogicalSlice<Source> logicalSlice = getSlices().get(id);
+		if (logicalSlice == null) {
+			logicalSlice = newLogicalSlice();
+		}
+		logicalSlice.addSlice(slice, function);
+		getSlices().put(id, logicalSlice);
+	}
+
+	protected LogicalSlice<Source> newLogicalSlice() {
+		LogicalSlice<Source> logicalSlice = null;
+		switch (functionType) {
+		case Equality:
+			logicalSlice = new EqualityLogicalSlice<>(algorithmType);
+			break;
+		case MasterSlave:
+			logicalSlice = new MasterSlaveLogicalSlice<>(algorithmType);
+			break;
+		case ReadWrite:
+			logicalSlice = new ReadWriteLogicalSlice<>(algorithmType);
+			break;
+
+		default:
+			logicalSlice = new EqualityLogicalSlice<>(algorithmType);
+			break;
+		}
+		return logicalSlice;
+	}
+
+	public void setFunctionType(FunctionType functionType) {
+		this.functionType = functionType;
+	}
+
 	public void setPlotter(SlicePlotter<Source> plotter) {
 		this.plotter = plotter;
 	}
@@ -91,4 +142,9 @@ public abstract class SliceGroup<Source> {
 	public void setOverType(OverType overType) {
 		this.overType = overType;
 	}
+
+	public void setAlgorithmType(SliceAlgorithmType algorithmType) {
+		this.algorithmType = algorithmType;
+	}
+
 }
