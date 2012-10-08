@@ -103,15 +103,21 @@ public abstract class SliceGroup<Source> {
 		getSlices().put(id, slice);
 	}
 
-	public void addSlice(long id, Slice slice) {
-		addSlice(id, slice, Function.Any);
+	public void addSlice(long id, String suffix, Slice slice) {
+		addSlice(id, suffix, slice, Function.Any);
 	}
 
-	public void addSlice(long id, Slice slice, Function function) {
+	public void addSlice(long id, Slice slice) {
+		addSlice(id, String.valueOf(id), slice, Function.Any);
+	}
+
+	public void addSlice(long id, String suffix, Slice slice, Function function) {
 		LogicalSlice<Source> logicalSlice = getSlices().get(id);
 		if (logicalSlice == null) {
 			logicalSlice = newLogicalSlice();
 		}
+		logicalSlice.setSuffix(suffix);
+		slice.setSuffix(suffix);
 		logicalSlice.addSlice(slice, function);
 		getSlices().put(id, logicalSlice);
 	}

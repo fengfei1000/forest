@@ -107,65 +107,65 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 	}
 
 	public Slice first(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.firstEntry();
 		return getSlice(entry, key, function, id, false);
 	}
 
 	@Override
 	public Slice first(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.firstEntry();
 		return getSlice(entry, key, id, false);
 	}
 
 	@Override
 	public Slice last(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
 		return getSlice(entry, key, id, false);
 	}
 
 	public Slice last(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
 		return getSlice(entry, key, function, id, false);
 	}
 
 	public Slice floor(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, function, id, false);
 	}
 
 	public Slice floor(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, id, false);
 	}
 
 	public Slice ceiling(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
 		return getSlice(entry, key, function, id, true);
 	}
 
 	public Slice ceiling(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
 		return getSlice(entry, key, id, true);
 	}
 
 	@Override
 	public Slice get(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, function, id, true);
 	}
 
 	@Override
 	public Slice get(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, id, true);
 	}

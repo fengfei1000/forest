@@ -34,10 +34,10 @@ public class NavigableSliceGroupExample {
 	}
 
 	private static void setupGroup(SliceGroup<Long> group) {
-		group.addSlice(1, new PhysicalSlice("1-1", "1"));
-		group.addSlice(2, new PhysicalSlice("2-1", "2"));
-		group.addSlice(3, new PhysicalSlice("3-1", "3"));
-		group.addSlice(4, new PhysicalSlice("4-1", "4"));
+		group.addSlice(1, new PhysicalSlice("1-1"));
+		group.addSlice(2, new PhysicalSlice("2-1"));
+		group.addSlice(3, new PhysicalSlice("3-1"));
+		group.addSlice(4, new PhysicalSlice("4-1"));
 
 	}
 

@@ -10,5 +10,6 @@ package fengfei.forest.slice;
  */
 public interface SlicePlotter<Source> {
 
-    long get(Source key);
+	long get(Source key, int sliceSize);
+
 }

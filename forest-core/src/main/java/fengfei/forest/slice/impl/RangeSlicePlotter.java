@@ -4,7 +4,7 @@ import fengfei.forest.slice.SlicePlotter;
 
 public abstract class RangeSlicePlotter<Source> implements SlicePlotter<Source> {
 
-    @Override
-    public abstract long get(Source key);
+	@Override
+	public abstract long get(Source key, int sliceSize);
 
 }

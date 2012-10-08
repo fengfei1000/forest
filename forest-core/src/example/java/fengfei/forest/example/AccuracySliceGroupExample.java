@@ -5,6 +5,7 @@ import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.impl.AccuracySliceGroup;
+import fengfei.forest.slice.impl.HashSlicePlotter;
 import fengfei.forest.slice.impl.LongSlicePlotter;
 import fengfei.forest.slice.impl.PhysicalSlice;
 
@@ -15,7 +16,7 @@ public class AccuracySliceGroupExample {
 	 */
 	public static void main(String[] args) {
 		AccuracySliceGroup<Long> group = new AccuracySliceGroup<>(
-				new LongSlicePlotter(), FunctionType.Equality,
+				new HashSlicePlotter<Long>(), FunctionType.Equality,
 				SliceAlgorithmType.Remainder);
 		setupGroup(group);
 		System.out.println(group);

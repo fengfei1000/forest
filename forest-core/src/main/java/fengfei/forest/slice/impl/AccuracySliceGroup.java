@@ -68,41 +68,41 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 
 	@Override
 	public Slice get(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key,slices.size());
 		LogicalSlice<Source> logicSlice = slices.get(id);
 		return getSlice(logicSlice, key, function, id,true);
 	}
 
 	@Override
 	public Slice get(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key,slices.size());
 		LogicalSlice<Source> logicSlice = slices.get(id);
 		return getSlice(logicSlice, key, id,true);
 
 	}
 
 	public Slice first(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key,slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.firstEntry();
 		return getSlice(entry, key, function, id,false);
 	}
 
 	@Override
 	public Slice first(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key,slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.firstEntry();
 		return getSlice(entry, key, id,false);
 	}
 
 	@Override
 	public Slice last(Source key) {
-		long id = plotter.get(key);
+		long id = plotter.get(key,slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.lastEntry();
 		return getSlice(entry, key, id,false);
 	}
 
 	public Slice last(Source key, Function function) {
-		long id = plotter.get(key);
+		long id = plotter.get(key,slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.lastEntry();
 		return getSlice(entry, key, function, id,false);
 	}
