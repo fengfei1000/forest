@@ -48,7 +48,12 @@ public abstract class SliceGroup<Source> {
 
 	public abstract Map<Long, LogicalSlice<Source>> getSlices();
 
-	protected Slice dealOver(Source key, Function function, long id) {
+	protected Slice dealOver(Source key, Function function, long id,
+			boolean isDealOver) {
+		if (!isDealOver) {
+			throw new NonExistedSliceException("id=" + id
+					+ " non-existed slice.");
+		}
 
 		switch (overType) {
 		case First:
@@ -70,10 +75,10 @@ public abstract class SliceGroup<Source> {
 	}
 
 	protected Slice getSlice(LogicalSlice<Source> logicSlice, Source key,
-			Function function, long id) {
+			Function function, long id, boolean isDealOver) {
 
 		if (logicSlice == null) {
-			return dealOver(key, function, id);
+			return dealOver(key, function, id, isDealOver);
 		}
 		Slice slice = logicSlice.get(id, function);
 		if (slice == null) {
@@ -83,9 +88,9 @@ public abstract class SliceGroup<Source> {
 	}
 
 	protected Slice getSlice(LogicalSlice<Source> logicSlice, Source key,
-			long id) {
+			long id, boolean isDealOver) {
 		if (logicSlice == null) {
-			return dealOver(key, null, id);
+			return dealOver(key, null, id, isDealOver);
 		}
 		Slice slice = logicSlice.getAny(id);
 		if (slice == null) {

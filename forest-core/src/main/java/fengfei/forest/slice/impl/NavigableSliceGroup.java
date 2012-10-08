@@ -7,8 +7,10 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
+import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.SlicePlotter;
+import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 
 public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
@@ -63,16 +65,19 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 		super(plotter);
 	}
 
-	private Slice getSlice(
-			Map.Entry<Long, LogicalSlice<Source>> entry,
-			Source key,
-			Function function,
-			long id) {
+	public NavigableSliceGroup(SlicePlotter<Source> plotter,
+			FunctionType functionType, SliceAlgorithmType algorithmType) {
+		super(plotter, functionType, algorithmType);
+	}
+
+	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
+			Source key, Function function, long id, boolean isDealOver) {
 		if (slices.size() == 0) {
-			throw new NonExistedSliceException("id=" + id + " non-existed slice.");
+			throw new NonExistedSliceException("id=" + id
+					+ " non-existed slice.");
 		}
 		if (entry == null || entry.getValue() == null) {
-			return dealOver(key, null, id);
+			return dealOver(key, null, id, isDealOver);
 			// throw new NonExistedSliceException("id=" + id + " non-existed.");
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
@@ -83,12 +88,14 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 		return slice;
 	}
 
-	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry, Source key, long id) {
+	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
+			Source key, long id, boolean isDealOver) {
 		if (slices.size() == 0) {
-			throw new NonExistedSliceException("id=" + id + " non-existed slice.");
+			throw new NonExistedSliceException("id=" + id
+					+ " non-existed slice.");
 		}
 		if (entry == null || entry.getValue() == null) {
-			return dealOver(key, null, id);
+			return dealOver(key, null, id, isDealOver);
 			// throw new NonExistedSliceException("id=" + id + " non-existed.");
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
@@ -102,65 +109,65 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 	public Slice first(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.firstEntry();
-		return getSlice(entry, key, function, id);
+		return getSlice(entry, key, function, id, false);
 	}
 
 	@Override
 	public Slice first(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.firstEntry();
-		return getSlice(entry, key, id);
+		return getSlice(entry, key, id, false);
 	}
 
 	@Override
 	public Slice last(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
-		return getSlice(entry, key, id);
+		return getSlice(entry, key, id, false);
 	}
 
 	public Slice last(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
-		return getSlice(entry, key, function, id);
+		return getSlice(entry, key, function, id, false);
 	}
 
 	public Slice floor(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
-		return getSlice(entry, key, function, id);
+		return getSlice(entry, key, function, id, false);
 	}
 
 	public Slice floor(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
-		return getSlice(entry, key, id);
+		return getSlice(entry, key, id, false);
 	}
 
 	public Slice ceiling(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
-		return getSlice(entry, key, function, id);
+		return getSlice(entry, key, function, id, true);
 	}
 
 	public Slice ceiling(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
-		return getSlice(entry, key, id);
+		return getSlice(entry, key, id, true);
 	}
 
 	@Override
 	public Slice get(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
-		return getSlice(entry, key, function, id);
+		return getSlice(entry, key, function, id, true);
 	}
 
 	@Override
 	public Slice get(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
-		return getSlice(entry, key, id);
+		return getSlice(entry, key, id, true);
 	}
 
 	@Override
@@ -170,7 +177,9 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 
 	@Override
 	public String toString() {
-		return "NavigableSliceGroup [slices=" + slices + ", defaultNavigationType=" + defaultNavigationType + ", plotter=" + plotter + "]";
+		return "NavigableSliceGroup [slices=" + slices
+				+ ", defaultNavigationType=" + defaultNavigationType
+				+ ", plotter=" + plotter + "]";
 	}
 
 }

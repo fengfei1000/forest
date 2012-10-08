@@ -4,17 +4,17 @@ import fengfei.forest.slice.Function;
 import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroup;
 import fengfei.forest.slice.config.FunctionType;
-import fengfei.forest.slice.impl.AccuracySliceGroup;
 import fengfei.forest.slice.impl.LongSlicePlotter;
+import fengfei.forest.slice.impl.NavigableSliceGroup;
 import fengfei.forest.slice.impl.PhysicalSlice;
 
-public class AccuracySliceGroupExample {
+public class NavigableSliceGroupExample {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		AccuracySliceGroup<Long> group = new AccuracySliceGroup<>(
+		NavigableSliceGroup<Long> group = new NavigableSliceGroup<>(
 				new LongSlicePlotter(), FunctionType.Equality,
 				SliceAlgorithmType.Remainder);
 		setupGroup(group);

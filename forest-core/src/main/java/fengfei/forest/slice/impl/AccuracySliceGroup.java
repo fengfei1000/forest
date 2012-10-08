@@ -33,13 +33,13 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 	}
 
 	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
-			Source key, Function function, long id) {
+			Source key, Function function, long id, boolean isDealOver) {
 		if (slices.size() == 0) {
 			throw new NonExistedSliceException("id=" + id
 					+ " non-existed slice.");
 		}
 		if (entry == null || entry.getValue() == null) {
-			return dealOver(key, function, id);
+			return dealOver(key, function, id, isDealOver);
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
 		Slice slice = logicSlice.get(id, function);
@@ -50,13 +50,13 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 	}
 
 	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
-			Source key, long id) {
+			Source key, long id, boolean isDealOver) {
 		if (slices.size() == 0) {
 			throw new NonExistedSliceException("id=" + id
 					+ " non-existed slice.");
 		}
 		if (entry == null || entry.getValue() == null) {
-			return dealOver(key, null, id);
+			return dealOver(key, null, id, isDealOver);
 		}
 		LogicalSlice<Source> logicSlice = entry.getValue();
 		Slice slice = logicSlice.getAny(id);
@@ -70,41 +70,41 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 	public Slice get(Source key, Function function) {
 		long id = plotter.get(key);
 		LogicalSlice<Source> logicSlice = slices.get(id);
-		return getSlice(logicSlice, key, function, id);
+		return getSlice(logicSlice, key, function, id,true);
 	}
 
 	@Override
 	public Slice get(Source key) {
 		long id = plotter.get(key);
 		LogicalSlice<Source> logicSlice = slices.get(id);
-		return getSlice(logicSlice, key, id);
+		return getSlice(logicSlice, key, id,true);
 
 	}
 
 	public Slice first(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.firstEntry();
-		return getSlice(entry, key, function, id);
+		return getSlice(entry, key, function, id,false);
 	}
 
 	@Override
 	public Slice first(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.firstEntry();
-		return getSlice(entry, key, id);
+		return getSlice(entry, key, id,false);
 	}
 
 	@Override
 	public Slice last(Source key) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.lastEntry();
-		return getSlice(entry, key, id);
+		return getSlice(entry, key, id,false);
 	}
 
 	public Slice last(Source key, Function function) {
 		long id = plotter.get(key);
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.lastEntry();
-		return getSlice(entry, key, function, id);
+		return getSlice(entry, key, function, id,false);
 	}
 
 	@Override
