@@ -26,9 +26,9 @@ public class EqualityLogicalSliceTest extends BaseSliceTest {
 		testMsg = "test add slice, ";
 		int id = 10;
 		create(slice);
-		slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-		slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
-		slice.addSlice(createPhysicalSlice(slice, id++), Function.Any);
+		slice.addSlice(createPhysicalSlice(slice, id++), Function.Normal);
+		slice.addSlice(createPhysicalSlice(slice, id++), Function.Normal);
+		slice.addSlice(createPhysicalSlice(slice, id++), Function.Normal);
 		assertEquals(testMsg, 3, slice.getSliceSize());
 		List<Slice> slices = slice.getSlices();
 		Map<String, String> pMap = slice.getExtraInfo();
@@ -49,7 +49,7 @@ public class EqualityLogicalSliceTest extends BaseSliceTest {
 
 	@Test
 	public void testGet() {
-		Slice slice1 = slice.get(1, Function.Any);
+		Slice slice1 = slice.get(1, Function.Normal);
 		System.out.println(slice1);
 	}
 

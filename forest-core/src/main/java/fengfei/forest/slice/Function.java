@@ -1,7 +1,7 @@
 package fengfei.forest.slice;
 
 public enum Function {
-	Any,
+	Normal,
 	Read,
 	Write,
 	ReadWrite,

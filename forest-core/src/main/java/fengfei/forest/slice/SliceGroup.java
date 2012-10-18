@@ -1,5 +1,6 @@
 package fengfei.forest.slice;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import fengfei.forest.slice.config.FunctionType;
@@ -15,6 +16,7 @@ public abstract class SliceGroup<Source> {
 	protected OverType overType = OverType.Last;
 	protected FunctionType functionType;
 	protected SliceAlgorithmType algorithmType;
+	protected Map<String, String> defaultExtraInfo = new HashMap<>();
 
 	@SuppressWarnings("unchecked")
 	public SliceGroup() {
@@ -34,18 +36,61 @@ public abstract class SliceGroup<Source> {
 		this.algorithmType = algorithmType;
 	}
 
+	/**
+	 * get slice by function
+	 * 
+	 * @param key
+	 *            the key is Source key type of SlicePlotter
+	 * @param function
+	 * @return
+	 */
 	public abstract Slice get(Source key, Function function);
 
+	/**
+	 * get any slice
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public abstract Slice get(Source key);
 
+	/**
+	 * get first slice of all slices
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public abstract Slice first(Source key);
 
+	/**
+	 * get first slice of all slices by function
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public abstract Slice first(Source key, Function function);
 
+	/**
+	 * get first slice of last slices
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public abstract Slice last(Source key);
 
+	/**
+	 * get first slice of all slices by function
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public abstract Slice last(Source key, Function function);
 
+	/**
+	 * get all slices
+	 * 
+	 * @return
+	 */
 	public abstract Map<Long, LogicalSlice<Source>> getSlices();
 
 	protected Slice dealOver(Source key, Function function, long id,
@@ -74,6 +119,16 @@ public abstract class SliceGroup<Source> {
 		}
 	}
 
+	/**
+	 * get a special function slice of logicslice
+	 * 
+	 * @param logicSlice
+	 * @param key
+	 * @param function
+	 * @param id
+	 * @param isDealOver
+	 * @return
+	 */
 	protected Slice getSlice(LogicalSlice<Source> logicSlice, Source key,
 			Function function, long id, boolean isDealOver) {
 
@@ -104,13 +159,38 @@ public abstract class SliceGroup<Source> {
 	}
 
 	public void addSlice(long id, String suffix, Slice slice) {
-		addSlice(id, suffix, slice, Function.Any);
+		addSlice(id, suffix, slice, Function.Normal);
 	}
 
+	/**
+	 * add a new slice to the group, suffix=id, and function is Function.Any
+	 * 
+	 * 
+	 * @see addSlice(long, String, Slice, Function)
+	 * @param id
+	 * @param slice
+	 */
 	public void addSlice(long id, Slice slice) {
-		addSlice(id, String.valueOf(id), slice, Function.Any);
+		addSlice(id, String.valueOf(id), slice, Function.Normal);
 	}
 
+	public void addSlice(long id, Slice slice, Function function) {
+		addSlice(id, String.valueOf(id), slice, function);
+	}
+
+	/**
+	 * add a new slice to the LogicSlice. if the LogicSlice is non-exists, then
+	 * new a LogicSlice. slice is a PhysicalSlice or LogicSlice instance
+	 * 
+	 * @param id
+	 *            logic slice id
+	 * @param suffix
+	 *            the slice mark
+	 * @param slice
+	 *            slice is a PhysicalSlice or LogicSlice instance,
+	 * @param function
+	 *            function type of silce
+	 */
 	public void addSlice(long id, String suffix, Slice slice, Function function) {
 		LogicalSlice<Source> logicalSlice = getSlices().get(id);
 		if (logicalSlice == null) {
@@ -118,10 +198,19 @@ public abstract class SliceGroup<Source> {
 		}
 		logicalSlice.setSuffix(suffix);
 		slice.setSuffix(suffix);
+		slice.setFunction(function);
+		Map<String, String> extraInfo = new HashMap<>(getDefaultExtraInfo());
+		extraInfo.putAll(slice.getExtraInfo());
+		slice.addExtraInfo(extraInfo);
 		logicalSlice.addSlice(slice, function);
 		getSlices().put(id, logicalSlice);
 	}
 
+	/**
+	 * create LogicSlice instance by functionType
+	 * 
+	 * @return this instance
+	 */
 	protected LogicalSlice<Source> newLogicalSlice() {
 		LogicalSlice<Source> logicalSlice = null;
 		switch (functionType) {
@@ -156,6 +245,14 @@ public abstract class SliceGroup<Source> {
 
 	public void setAlgorithmType(SliceAlgorithmType algorithmType) {
 		this.algorithmType = algorithmType;
+	}
+
+	public Map<String, String> getDefaultExtraInfo() {
+		return defaultExtraInfo;
+	}
+
+	public void setDefaultExtraInfo(Map<String, String> defaultExtraInfo) {
+		this.defaultExtraInfo = defaultExtraInfo;
 	}
 
 }

@@ -9,7 +9,6 @@ import fengfei.forest.slice.model.Status;
 
 public class PhysicalSlice extends Slice {
 
-	private Function function = Function.Any;
 
 	public PhysicalSlice() {
 		setPhysical(true);
@@ -38,13 +37,7 @@ public class PhysicalSlice extends Slice {
 		this.function = function;
 	}
 
-	public Function getFunction() {
-		return function;
-	}
 
-	public void setFunction(Function function) {
-		this.function = function;
-	}
 
 	@Override
 	public String toString() {

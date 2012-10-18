@@ -13,6 +13,7 @@ public abstract class Slice {
 	protected int weight;
 	protected Status status;
 	protected boolean isPhysical;
+	protected Function function = Function.Normal;
 
 	public Slice() {
 	}
@@ -56,7 +57,7 @@ public abstract class Slice {
 		if (extraInfo == null) {
 			return;
 		}
-		this.extraInfo.putAll(extraInfo);
+		this.extraInfo.putAll(new HashMap<>(extraInfo));
 	}
 
 	public int getWeight() {
@@ -83,11 +84,19 @@ public abstract class Slice {
 		this.isPhysical = isPhysical;
 	}
 
+	public Function getFunction() {
+		return function;
+	}
+
+	public void setFunction(Function function) {
+		this.function = function;
+	}
+
 	@Override
 	public String toString() {
-		return "\nSlice [id=" + id + ", suffix=" + suffix + ", extraInfo="
+		return "Slice [id=" + id + ", suffix=" + suffix + ", extraInfo="
 				+ extraInfo + ", weight=" + weight + ", status=" + status
-				+ ", isPhysical=" + isPhysical + "]";
+				+ ", isPhysical=" + isPhysical + ", function=" + function + "]";
 	}
 
 }

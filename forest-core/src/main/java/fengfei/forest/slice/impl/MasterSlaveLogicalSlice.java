@@ -31,7 +31,7 @@ public class MasterSlaveLogicalSlice<Source> extends LogicalSlice<Source> {
 			slave.addSlice(slice);
 			all.addSlice(slice);
 			break;
-		case Any:
+		case Normal:
 			master.addSlice(slice);
 			slave.addSlice(slice);
 			all.addSlice(slice);
@@ -76,7 +76,7 @@ public class MasterSlaveLogicalSlice<Source> extends LogicalSlice<Source> {
 			return master.next(seed);
 		case Slave:
 			return slave.next(seed);
-		case Any:
+		case Normal:
 			return all.next(seed);
 		default:
 			break;

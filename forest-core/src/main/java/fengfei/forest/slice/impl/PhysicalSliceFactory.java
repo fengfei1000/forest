@@ -43,13 +43,13 @@ class PhysicalSliceFactory {
 	private boolean validateFunction(FunctionType functionType, Function function) {
 		switch (functionType) {
 		case ReadWrite:
-			if (function == Function.Read || function == Function.Write || function == Function.ReadWrite || function == Function.Any) {
+			if (function == Function.Read || function == Function.Write || function == Function.ReadWrite || function == Function.Normal) {
 				return true;
 			}
 
 			break;
 		case MasterSlave:
-			if (function == Function.Master || function == Function.Slave || function == Function.Any) {
+			if (function == Function.Master || function == Function.Slave || function == Function.Normal) {
 				return true;
 			}
 			break;
