@@ -10,7 +10,7 @@ import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
 import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroup;
-import fengfei.forest.slice.SlicePlotter;
+import fengfei.forest.slice.SliceEqualizer;
 import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 
@@ -23,13 +23,18 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 		super();
 	}
 
-	public AccuracySliceGroup(SlicePlotter<Source> plotter) {
-		super(plotter);
+	public AccuracySliceGroup(SliceEqualizer<Source> equalizer) {
+		super(equalizer);
 	}
 
-	public AccuracySliceGroup(SlicePlotter<Source> plotter,
+	public AccuracySliceGroup(SliceEqualizer<Source> equalizer,
 			FunctionType functionType, SliceAlgorithmType algorithmType) {
-		super(plotter, functionType, algorithmType);
+		super(equalizer, functionType, algorithmType);
+	}
+	public AccuracySliceGroup(SliceEqualizer<Source> equalizer,
+			FunctionType functionType, SliceAlgorithmType algorithmType,Map<String, String> defaultExtraInfo) {
+		super(equalizer, functionType, algorithmType);
+		this.defaultExtraInfo=defaultExtraInfo;
 	}
 
 	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
@@ -68,41 +73,41 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 
 	@Override
 	public Slice get(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		LogicalSlice<Source> logicSlice = slices.get(id);
 		return getSlice(logicSlice, key, function, id, true);
 	}
 
 	@Override
 	public Slice get(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		LogicalSlice<Source> logicSlice = slices.get(id);
 		return getSlice(logicSlice, key, id, true);
 
 	}
 
 	public Slice first(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.firstEntry();
 		return getSlice(entry, key, function, id, false);
 	}
 
 	@Override
 	public Slice first(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.firstEntry();
 		return getSlice(entry, key, id, false);
 	}
 
 	@Override
 	public Slice last(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.lastEntry();
 		return getSlice(entry, key, id, false);
 	}
 
 	public Slice last(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = sortedSlices.lastEntry();
 		return getSlice(entry, key, function, id, false);
 	}
@@ -119,7 +124,7 @@ public class AccuracySliceGroup<Source> extends SliceGroup<Source> {
 
 	@Override
 	public String toString() {
-		return "AccuracySliceGroup [slices=" + slices + ", plotter=" + plotter
+		return "AccuracySliceGroup [slices=" + slices + ", equalizer=" + equalizer
 				+ ", overType=" + overType + "]";
 	}
 

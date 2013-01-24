@@ -14,7 +14,7 @@ import fengfei.forest.slice.Slice;
 @Ignore
 public class EqualityLogicalSliceTest extends BaseSliceTest {
 
-	static EqualityLogicalSlice<LongSlicePlotter> slice = new EqualityLogicalSlice<>();
+	static EqualityLogicalSlice<LongSliceEqualizer> slice = new EqualityLogicalSlice<>();
 
 	@BeforeClass
 	public static void setup() {

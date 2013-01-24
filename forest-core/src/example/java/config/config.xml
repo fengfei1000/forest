@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Units>
 	<group id="unit1" type="Accuracy">
-		<plotterClass>fengfei.forest.slice.impl.LongSlicePlotter
-		</plotterClass>
+		<equalizerClass>fengfei.forest.slice.impl.LongSliceEqualizer
+		</equalizerClass>
 		<navigationType>Floor</navigationType>
 		<funcType>ReadWrite</funcType>
 		<over>Exception</over>

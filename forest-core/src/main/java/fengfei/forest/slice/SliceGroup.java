@@ -6,13 +6,13 @@ import java.util.Map;
 import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 import fengfei.forest.slice.impl.EqualityLogicalSlice;
-import fengfei.forest.slice.impl.LongSlicePlotter;
+import fengfei.forest.slice.impl.LongSliceEqualizer;
 import fengfei.forest.slice.impl.MasterSlaveLogicalSlice;
 import fengfei.forest.slice.impl.ReadWriteLogicalSlice;
 
 public abstract class SliceGroup<Source> {
 
-	protected SlicePlotter<Source> plotter;
+	protected SliceEqualizer<Source> equalizer;
 	protected OverType overType = OverType.Last;
 	protected FunctionType functionType;
 	protected SliceAlgorithmType algorithmType;
@@ -20,18 +20,18 @@ public abstract class SliceGroup<Source> {
 
 	@SuppressWarnings("unchecked")
 	public SliceGroup() {
-		plotter = (SlicePlotter<Source>) new LongSlicePlotter();
+		equalizer = (SliceEqualizer<Source>) new LongSliceEqualizer();
 	}
 
-	public SliceGroup(SlicePlotter<Source> plotter) {
-		this.plotter = plotter;
+	public SliceGroup(SliceEqualizer<Source> equalizer) {
+		this.equalizer = equalizer;
 
 	}
 
-	public SliceGroup(SlicePlotter<Source> plotter, FunctionType functionType,
+	public SliceGroup(SliceEqualizer<Source> equalizer, FunctionType functionType,
 			SliceAlgorithmType algorithmType) {
 		super();
-		this.plotter = plotter;
+		this.equalizer = equalizer;
 		this.functionType = functionType;
 		this.algorithmType = algorithmType;
 	}
@@ -40,7 +40,7 @@ public abstract class SliceGroup<Source> {
 	 * get slice by function
 	 * 
 	 * @param key
-	 *            the key is Source key type of SlicePlotter
+	 *            the key is Source key type of Sliceequalizer
 	 * @param function
 	 * @return
 	 */
@@ -235,8 +235,8 @@ public abstract class SliceGroup<Source> {
 		this.functionType = functionType;
 	}
 
-	public void setPlotter(SlicePlotter<Source> plotter) {
-		this.plotter = plotter;
+	public void setEqualizer(SliceEqualizer<Source> equalizer) {
+		this.equalizer = equalizer;
 	}
 
 	public void setOverType(OverType overType) {

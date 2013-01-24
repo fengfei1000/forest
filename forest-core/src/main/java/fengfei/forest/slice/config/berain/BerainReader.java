@@ -60,8 +60,8 @@ public class BerainReader implements SliceReader<SliceGroupFactory> {
 			config.type = be.value;
 			String tp = be.path;
 			//
-			BerainEntry plotterClassPe = client.getFull(tp + "/plotterClass");
-			config.plotterClass = plotterClassPe.value;
+			BerainEntry equalizerClassPe = client.getFull(tp + "/equalizerClass");
+			config.equalizerClass = equalizerClassPe.value;
 
 			BerainEntry typePe = client.getFull(tp + "/type");
 			config.type = typePe.value;

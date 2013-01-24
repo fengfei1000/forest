@@ -49,7 +49,7 @@ public class DbcpPoolableDataSourceFactory implements PoolableDataSourceFactory 
 					params,
 					"removeAbandonedTimeout",
 					60));
-			ObjectPool connectionPool = null;
+			ObjectPool<?> connectionPool = null;
 			// if (conf.getLogAbandoned() && conf.getRemoveAbandoned()) {
 			// for watch connections
 			connectionPool = new AbandonedObjectPool(null, conf);

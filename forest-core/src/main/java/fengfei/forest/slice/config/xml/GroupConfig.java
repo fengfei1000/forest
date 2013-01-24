@@ -25,7 +25,7 @@ public class GroupConfig implements Cloneable {
     @Attribute
     public String id;
     @Element(required = false)
-    public String plotterClass;
+    public String equalizerClass;
     @Attribute(required = false)
     public String type;
     @Attribute(name = "extends", required = false)
@@ -51,13 +51,13 @@ public class GroupConfig implements Cloneable {
 
     public GroupConfig(
         String id,
-        String plotterClass,
+        String equalizerClass,
         String type,
         OverType over,
         String unitSuffix) {
         super();
         this.id = id;
-        this.plotterClass = plotterClass;
+        this.equalizerClass = equalizerClass;
         this.type = type;
         this.over = over.name();
         this.unitSuffix = unitSuffix;
@@ -103,8 +103,8 @@ public class GroupConfig implements Cloneable {
         this.id = id;
     }
 
-    public String getPlotterClass() {
-        return plotterClass;
+    public String getEqualizerClass() {
+        return equalizerClass;
     }
 
     public void setType(String type) {
@@ -155,8 +155,8 @@ public class GroupConfig implements Cloneable {
         return type;
     }
 
-    public void setPlotterClass(String plotterClass) {
-        this.plotterClass = plotterClass;
+    public void setEqualizerClass(String equalizerClass) {
+        this.equalizerClass = equalizerClass;
     }
 
     public void setParentId(String parentId) {
@@ -189,7 +189,7 @@ public class GroupConfig implements Cloneable {
 
     @Override
     public String toString() {
-        return "\n	GroupConfig [id=" + id + ", plotterClass=" + plotterClass + ", SliceGroupType="
+        return "\n	GroupConfig [id=" + id + ", equalizerClass=" + equalizerClass + ", SliceGroupType="
                 + type + ", SliceAlgorithmType=" + algorithmType + ", over=" + over
                 + ", unitSuffix=" + unitSuffix + ",\n	defaultExtraInfo=" + defaultExtraInfo
                 + ", \n	slices=" + slices + "]";
@@ -209,7 +209,7 @@ public class GroupConfig implements Cloneable {
         config.setNavigationType(getNavigationTypeString());
         config.setOver(getOver());
         config.setParentId(getParentId());
-        config.setPlotterClass(getPlotterClass());
+        config.setEqualizerClass(getEqualizerClass());
         config.setType(getType());
         config.setSlices(new HashSet<>(getSlices()));
         config.setUnitSuffix(getUnitSuffix());

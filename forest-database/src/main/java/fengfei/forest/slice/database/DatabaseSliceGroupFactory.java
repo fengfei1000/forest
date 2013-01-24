@@ -10,7 +10,7 @@ import fengfei.forest.database.pool.BonePoolableDataSourceFactory;
 import fengfei.forest.database.pool.DbcpPoolableDataSourceFactory;
 import fengfei.forest.database.pool.PoolableDataSourceFactory;
 import fengfei.forest.database.pool.TomcatPoolableDataSourceFactory;
-import fengfei.forest.slice.SlicePlotter;
+import fengfei.forest.slice.SliceEqualizer;
 import fengfei.forest.slice.config.xml.GroupConfig;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 import fengfei.forest.slice.impl.SliceGroupFactory;
@@ -47,7 +47,7 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 	}
 
 	public <Source> DatabaseSliceGroup<Source> getDatabaseSliceGroup(
-			SlicePlotter<Source> plotter, String unitName) {
+			SliceEqualizer<Source> plotter, String unitName) {
 		@SuppressWarnings("unchecked")
 		DatabaseSliceGroup<Source> group = (DatabaseSliceGroup<Source>) databaseSliceGroupCache
 				.get(unitName);
@@ -74,7 +74,7 @@ public class DatabaseSliceGroupFactory extends SliceGroupFactory {
 	}
 
 	public <Source> PoolableSliceGroup<Source> getPoolableSliceGroup(
-			SlicePlotter<Source> plotter, String unitName) {
+			SliceEqualizer<Source> plotter, String unitName) {
 		@SuppressWarnings("unchecked")
 		PoolableSliceGroup<Source> group = (PoolableSliceGroup<Source>) poolableSliceGroupCache
 				.get(unitName);

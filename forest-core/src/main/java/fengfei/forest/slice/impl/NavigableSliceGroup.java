@@ -9,23 +9,13 @@ import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
 import fengfei.forest.slice.SliceAlgorithmType;
 import fengfei.forest.slice.SliceGroup;
-import fengfei.forest.slice.SlicePlotter;
+import fengfei.forest.slice.SliceEqualizer;
 import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 
 public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 
 	public enum NavigationType {
-
-		/**
-		 * Min
-		 */
-		First,
-
-		/**
-		 * Max
-		 */
-		Last,
 
 		/**
 		 * Less than or equal to
@@ -52,22 +42,23 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 
 	}
 
+	final static NavigationType DefaultNavigationType = NavigationType.Floor;
 	// protected NavigableMap<Long, LogicSlice<Source>> slices = new
 	// TreeMap<>();
 	protected NavigableMap<Long, LogicalSlice<Source>> slices = new ConcurrentSkipListMap<>();
-	protected NavigationType defaultNavigationType = NavigationType.Floor;
+	protected NavigationType navigationType = DefaultNavigationType;
 
 	public NavigableSliceGroup() {
 		super();
 	}
 
-	public NavigableSliceGroup(SlicePlotter<Source> plotter) {
-		super(plotter);
+	public NavigableSliceGroup(SliceEqualizer<Source> equalizer) {
+		super(equalizer);
 	}
 
-	public NavigableSliceGroup(SlicePlotter<Source> plotter,
+	public NavigableSliceGroup(SliceEqualizer<Source> equalizer,
 			FunctionType functionType, SliceAlgorithmType algorithmType) {
-		super(plotter, functionType, algorithmType);
+		super(equalizer, functionType, algorithmType);
 	}
 
 	private Slice getSlice(Map.Entry<Long, LogicalSlice<Source>> entry,
@@ -107,79 +98,84 @@ public class NavigableSliceGroup<Source> extends SliceGroup<Source> {
 	}
 
 	public Slice first(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.firstEntry();
 		return getSlice(entry, key, function, id, false);
 	}
 
 	@Override
 	public Slice first(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.firstEntry();
 		return getSlice(entry, key, id, false);
 	}
 
 	@Override
 	public Slice last(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
 		return getSlice(entry, key, id, false);
 	}
 
 	public Slice last(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.lastEntry();
 		return getSlice(entry, key, function, id, false);
 	}
 
 	public Slice floor(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, function, id, false);
 	}
 
 	public Slice floor(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, id, false);
 	}
 
 	public Slice ceiling(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
 		return getSlice(entry, key, function, id, true);
 	}
 
 	public Slice ceiling(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.ceilingEntry(id);
 		return getSlice(entry, key, id, true);
 	}
 
 	@Override
 	public Slice get(Source key, Function function) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, function, id, true);
 	}
 
 	@Override
 	public Slice get(Source key) {
-		long id = plotter.get(key, slices.size());
+		long id = equalizer.get(key, slices.size());
 		Map.Entry<Long, LogicalSlice<Source>> entry = slices.floorEntry(id);
 		return getSlice(entry, key, id, true);
 	}
+
 
 	@Override
 	public Map<Long, LogicalSlice<Source>> getSlices() {
 		return slices;
 	}
 
+	public void setNavigationType(NavigationType navigationType) {
+		this.navigationType = navigationType;
+	}
+
 	@Override
 	public String toString() {
 		return "NavigableSliceGroup [slices=" + slices
-				+ ", defaultNavigationType=" + defaultNavigationType
-				+ ", plotter=" + plotter + "]";
+				+ ", defaultNavigationType=" + navigationType + ", equalizer="
+				+ equalizer + "]";
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.SliceGroup;
-import fengfei.forest.slice.SlicePlotter;
+import fengfei.forest.slice.SliceEqualizer;
 import fengfei.forest.slice.impl.SliceGroupFactory;
 
 public class DatabaseSliceGroup<Source> extends SliceGroup<Source> {
@@ -18,7 +18,7 @@ public class DatabaseSliceGroup<Source> extends SliceGroup<Source> {
 
     public DatabaseSliceGroup(
         SliceGroupFactory factory,
-        SlicePlotter<Source> plotter,
+        SliceEqualizer<Source> plotter,
         String unitName) {
         this.sliceGroup = factory.getSliceGroup(plotter, unitName);
     }

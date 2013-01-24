@@ -14,7 +14,7 @@ public class BaseSliceTest {
     static int id = 1;
     String testMsg = "test";
 
-    public static void create(LogicalSlice<LongSlicePlotter> slice) {
+    public static void create(LogicalSlice<LongSliceEqualizer> slice) {
         slice.setAlgorithmType(SliceAlgorithmType.Loop);
         slice.setId("1");
         slice.setStatus(Status.Normal);
@@ -26,7 +26,7 @@ public class BaseSliceTest {
         slice.addExtraInfo(KEY_PASSWORD, PUSER);
     }
 
-    public static PhysicalSlice createPhysicalSlice(LogicalSlice<LongSlicePlotter> pslice, int id) {
+    public static PhysicalSlice createPhysicalSlice(LogicalSlice<LongSliceEqualizer> pslice, int id) {
         PhysicalSlice slice = new PhysicalSlice();
         slice.setId(String.valueOf(id));
         slice.setStatus(Status.Normal);

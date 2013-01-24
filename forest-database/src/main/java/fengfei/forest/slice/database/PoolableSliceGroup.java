@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import fengfei.forest.database.pool.PoolableDataSourceFactory;
 import fengfei.forest.database.pool.PoolableException;
 import fengfei.forest.slice.Function;
-import fengfei.forest.slice.SlicePlotter;
+import fengfei.forest.slice.SliceEqualizer;
 import fengfei.forest.slice.exception.SliceException;
 
 public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
@@ -22,7 +22,7 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 	}
 
 	public PoolableSliceGroup(DatabaseSliceGroupFactory factory,
-			SlicePlotter<Source> plotter, String unitName) {
+			SliceEqualizer<Source> plotter, String unitName) {
 		super(factory, plotter, unitName);
 		this.poolableDataSourceFactory = factory
 				.getPoolableDataSourceFactory(unitName);
@@ -112,7 +112,7 @@ public class PoolableSliceGroup<Source> extends DatabaseSliceGroup<Source> {
 		return "PoolableSliceGroup [pooledDataSources=" + pooledDataSources
 				+ ", urlMaker=" + urlMaker + ", poolableDataSourceFactory="
 				+ poolableDataSourceFactory + ", sliceGroup=" + sliceGroup
-				+ ", plotter=" + plotter + ", overType=" + overType + "]";
+				+ ", plotter=" + equalizer + ", overType=" + overType + "]";
 	}
 
 }
