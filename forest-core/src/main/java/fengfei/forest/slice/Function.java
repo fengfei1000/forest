@@ -1,5 +1,9 @@
 package fengfei.forest.slice;
-
+/**
+ * 
+ * @author tietang
+ *
+ */
 public enum Function {
 	Normal,
 	Read,

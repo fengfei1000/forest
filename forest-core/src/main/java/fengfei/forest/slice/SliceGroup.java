@@ -2,6 +2,7 @@ package fengfei.forest.slice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
@@ -28,8 +29,8 @@ public abstract class SliceGroup<Source> {
 
 	}
 
-	public SliceGroup(SliceEqualizer<Source> equalizer, FunctionType functionType,
-			SliceAlgorithmType algorithmType) {
+	public SliceGroup(SliceEqualizer<Source> equalizer,
+			FunctionType functionType, SliceAlgorithmType algorithmType) {
 		super();
 		this.equalizer = equalizer;
 		this.functionType = functionType;
@@ -158,6 +159,13 @@ public abstract class SliceGroup<Source> {
 		getSlices().put(id, slice);
 	}
 
+	protected AtomicLong ids = new AtomicLong();
+
+	public void addSlice(String suffix, Slice slice) {
+		long id = ids.getAndIncrement();
+		addSlice(id, suffix, slice, Function.Normal);
+	}
+
 	public void addSlice(long id, String suffix, Slice slice) {
 		addSlice(id, suffix, slice, Function.Normal);
 	}
@@ -174,7 +182,17 @@ public abstract class SliceGroup<Source> {
 		addSlice(id, String.valueOf(id), slice, Function.Normal);
 	}
 
+	public void addSlice(Slice slice) {
+		long id = ids.getAndIncrement();
+		addSlice(id, String.valueOf(id), slice, Function.Normal);
+	}
+
 	public void addSlice(long id, Slice slice, Function function) {
+		addSlice(id, String.valueOf(id), slice, function);
+	}
+
+	public void addSlice(Slice slice, Function function) {
+		long id = ids.getAndIncrement();
 		addSlice(id, String.valueOf(id), slice, function);
 	}
 
@@ -197,9 +215,10 @@ public abstract class SliceGroup<Source> {
 			logicalSlice = newLogicalSlice();
 		}
 		logicalSlice.setSuffix(suffix);
-		slice.setSuffix(suffix);
+		slice.installSuffix(suffix);
 		slice.setFunction(function);
 		Map<String, String> extraInfo = new HashMap<>(getDefaultExtraInfo());
+		extraInfo.putAll(logicalSlice.getExtraInfo());
 		extraInfo.putAll(slice.getExtraInfo());
 		slice.addExtraInfo(extraInfo);
 		logicalSlice.addSlice(slice, function);

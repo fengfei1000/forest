@@ -46,7 +46,14 @@ public abstract class Slice {
 	}
 
 	public void setSuffix(String suffix) {
+
 		this.suffix = suffix;
+	}
+
+	public void installSuffix(String suffix) {
+		if (this.suffix == null) {
+			this.suffix = suffix;
+		}
 	}
 
 	public Map<String, String> getExtraInfo() {
