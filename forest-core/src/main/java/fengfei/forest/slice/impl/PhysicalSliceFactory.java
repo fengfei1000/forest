@@ -33,7 +33,7 @@ class PhysicalSliceFactory {
 		slice.addExtraInfo(logicalSlice.getExtraInfo());
 		slice.addExtraInfo(sliceConfig.getExtraInfo());
 		slice.setPhysical(true);
-		slice.setSuffix(logicalSlice.getSuffix());
+		slice.setSliceId(logicalSlice.getSliceId());
 		slice.setWeight(sliceConfig.getWeight());
 		slice.setFunction(function);
 

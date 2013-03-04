@@ -1,5 +1,9 @@
 package fengfei.forest.slice.impl;
 
+import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import fengfei.forest.slice.Function;
 import fengfei.forest.slice.LogicalSlice;
 import fengfei.forest.slice.Slice;
@@ -8,9 +12,10 @@ import fengfei.forest.slice.exception.NoSupportedException;
 
 public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 
-	private SliceModel read;
-	private SliceModel write;
-	private SliceModel all;
+	protected Lock lock = new ReentrantLock();
+	private SliceTribe read;
+	private SliceTribe write;
+	private SliceTribe all;
 
 	public ReadWriteLogicalSlice() {
 		super();
@@ -37,8 +42,7 @@ public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 			all.addSlice(slice);
 			break;
 		default:
-			throw new NoSupportedException("Don't supported the function: "
-					+ function.name());
+			throw new NoSupportedException("Don't supported the function: " + function.name());
 		}
 	}
 
@@ -51,23 +55,22 @@ public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 	public void setAlgorithmType(SliceAlgorithmType algorithmType) {
 		switch (algorithmType) {
 		case Hash:
-			read = new HashSliceModel();
-			write = new HashSliceModel();
-			all = new HashSliceModel();
+			read = new HashSliceTribe();
+			write = new HashSliceTribe();
+			all = new HashSliceTribe();
 		case Remainder:
-			read = new RemainderSliceModel();
-			write = new RemainderSliceModel();
-			all = new RemainderSliceModel();
+			read = new RemainderSliceTribe();
+			write = new RemainderSliceTribe();
+			all = new RemainderSliceTribe();
 		case Loop:
-			read = new LoopSliceModel();
-			write = new LoopSliceModel();
-			all = new LoopSliceModel();
+			read = new LoopSliceTribe();
+			write = new LoopSliceTribe();
+			all = new LoopSliceTribe();
 		default:
-			read = new LoopSliceModel();
-			write = new LoopSliceModel();
-			all = new LoopSliceModel();
+			read = new LoopSliceTribe();
+			write = new LoopSliceTribe();
+			all = new LoopSliceTribe();
 		}
-
 	}
 
 	public Slice get(long seed, Function function) {
@@ -82,7 +85,6 @@ public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 			break;
 		}
 		return null;
-
 	}
 
 	@Override
@@ -90,14 +92,48 @@ public class ReadWriteLogicalSlice<Source> extends LogicalSlice<Source> {
 		return all.next(seed);
 	}
 
-	@Override
-	public String toString() {
-		return "ReadWriteLogicalSlice [read=" + read + ", write=" + write
-				+ ", all=" + all + ", subSliceGroup=" + subSliceGroup
-				+ ", algorithmType=" + algorithmType + ", id=" + id
-				+ ", suffix=" + suffix + ", extraInfo=" + extraInfo
-				+ ", weight=" + weight + ", status=" + status + ", isPhysical="
-				+ isPhysical + "]";
+	public boolean fail(Slice slice) {
+		lock.lock();
+		try {
+			return (fail(read, slice) || fail(write, slice)) && fail(all, slice);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			lock.unlock();
+		}
 	}
 
+	public boolean fail(SliceTribe tribe, Slice slice) {
+		List<Slice> availableSlices = tribe.getAvailableSlices();
+		List<Slice> failSlices = tribe.getFailSlices();
+		availableSlices.remove(slice);
+		failSlices.add(slice);
+		return true;
+	}
+
+	public boolean recover(Slice slice) {
+		lock.lock();
+		try {
+			return (recover(read, slice) || recover(write, slice)) && recover(all, slice);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public boolean recover(SliceTribe tribe, Slice slice) {
+		List<Slice> availableSlices = tribe.getAvailableSlices();
+		List<Slice> failSlices = tribe.getFailSlices();
+		failSlices.remove(slice);
+		availableSlices.add(slice);
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ReadWriteLogicalSlice [read=" + read + ", write=" + write + ", all=" + all + ", subSliceGroup=" + subSliceGroup + ", algorithmType=" + algorithmType + ", id=" + id + ", sliceId=" + sliceId + ", extraInfo=" + extraInfo + ", weight=" + weight + ", status=" + status + ", isPhysical=" + isPhysical + "]";
+	}
 }

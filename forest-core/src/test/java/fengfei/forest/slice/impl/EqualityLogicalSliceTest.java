@@ -35,7 +35,7 @@ public class EqualityLogicalSliceTest extends BaseSliceTest {
 		for (int i = 0; i < slices.size(); i++) {
 			Slice s = slices.get(i);
 			assertNotNull(testMsg, s);
-			assertEquals(testMsg, s.getSuffix(), slice.getSuffix());
+			assertEquals(testMsg, s.getSliceId(), slice.getSliceId());
 			Map<String, String> exMap = s.getExtraInfo();
 			assertEquals(testMsg, exMap.get(KEY_PASSWORD), pMap.get(KEY_PASSWORD));
 			assertEquals(testMsg, exMap.get(KEY_USER), pMap.get(KEY_USER));

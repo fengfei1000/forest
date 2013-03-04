@@ -8,7 +8,6 @@ import fengfei.forest.slice.config.FunctionType;
 import fengfei.forest.slice.exception.NonExistedSliceException;
 import fengfei.forest.slice.impl.EqualityLogicalSlice;
 import fengfei.forest.slice.impl.LongSliceEqualizer;
-import fengfei.forest.slice.impl.MasterSlaveLogicalSlice;
 import fengfei.forest.slice.impl.ReadWriteLogicalSlice;
 
 public abstract class SliceGroup<Source> {
@@ -214,8 +213,8 @@ public abstract class SliceGroup<Source> {
 		if (logicalSlice == null) {
 			logicalSlice = newLogicalSlice();
 		}
-		logicalSlice.setSuffix(suffix);
-		slice.installSuffix(suffix);
+		logicalSlice.setSliceId(suffix);
+		slice.installSliceId(suffix);
 		slice.setFunction(function);
 		Map<String, String> extraInfo = new HashMap<>(getDefaultExtraInfo());
 		extraInfo.putAll(logicalSlice.getExtraInfo());
@@ -236,9 +235,7 @@ public abstract class SliceGroup<Source> {
 		case Equality:
 			logicalSlice = new EqualityLogicalSlice<>(algorithmType);
 			break;
-		case MasterSlave:
-			logicalSlice = new MasterSlaveLogicalSlice<>(algorithmType);
-			break;
+	 
 		case ReadWrite:
 			logicalSlice = new ReadWriteLogicalSlice<>(algorithmType);
 			break;

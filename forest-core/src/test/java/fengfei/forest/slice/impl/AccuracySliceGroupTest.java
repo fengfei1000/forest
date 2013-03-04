@@ -58,8 +58,8 @@ public class AccuracySliceGroupTest extends BaseSliceTest {
 		assertTrue(PPWD.equals(exMap.get(KEY_PASSWORD)));
 		Slice slice3 = group.get(3l);
 		assertNotNull(slice3);
-		assertEquals(slice3.getSuffix(), slice2.getSuffix());
-		assertFalse(slice3.getSuffix().equals(slice1.getSuffix()));
+		assertEquals(slice3.getSliceId(), slice2.getSliceId());
+		assertFalse(slice3.getSliceId().equals(slice1.getSliceId()));
 		assertNotNull(slice3.getId());
 		exMap = slice3.getExtraInfo();
 		assertFalse(PHOST.equals(exMap.get(KEY_HOST)));

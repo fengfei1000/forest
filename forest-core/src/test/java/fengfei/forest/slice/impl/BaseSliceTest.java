@@ -18,7 +18,7 @@ public class BaseSliceTest {
         slice.setAlgorithmType(SliceAlgorithmType.Loop);
         slice.setId("1");
         slice.setStatus(Status.Normal);
-        slice.setSuffix("_1");
+        slice.setSliceId("_1");
         slice.setWeight(1);
         slice.addExtraInfo(KEY_HOST, PHOST);
         slice.addExtraInfo(KEY_PORT, PPORT);

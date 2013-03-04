@@ -33,7 +33,6 @@ public abstract class LogicalSlice<Source> extends Slice {
 	public void addSlice(Slice slice, String func) {
 		Function function = Function.valueOf(func);
 		addSlice(slice, function);
-
 	}
 
 	public Slice getChild(Source key, Function function) {
@@ -51,12 +50,9 @@ public abstract class LogicalSlice<Source> extends Slice {
 	}
 
 	protected void mergeInheritInfoTo(Slice slice) {
-		Map<String, String> extraInfo = new HashMap<String, String>(
-				slice.getExtraInfo());
+		Map<String, String> extraInfo = new HashMap<String, String>(slice.getExtraInfo());
 		slice.addExtraInfo(getExtraInfo());
 		slice.addExtraInfo(extraInfo);
-		slice.setSuffix((suffix == null || "".equals(suffix)) ? slice.suffix
-				: suffix);
 	}
 
 	public abstract void addSlice(Slice slice, Function function);
@@ -67,13 +63,9 @@ public abstract class LogicalSlice<Source> extends Slice {
 
 	public abstract void setAlgorithmType(SliceAlgorithmType algorithmType);
 
-	@Override
-	public String toString() {
-		return "LogicalSlice [subSliceGroup=" + subSliceGroup
-				+ ", algorithmType=" + algorithmType + ", id=" + id
-				+ ", suffix=" + suffix + ", extraInfo=" + extraInfo
-				+ ", weight=" + weight + ", status=" + status + ", isPhysical="
-				+ isPhysical + "]";
-	}
+	public abstract boolean fail(Slice slice);
 
+	public abstract boolean recover(Slice slice);
+
+	 
 }

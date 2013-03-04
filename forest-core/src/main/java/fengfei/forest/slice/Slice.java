@@ -8,7 +8,7 @@ import fengfei.forest.slice.model.Status;
 public abstract class Slice {
 
 	protected String id;
-	protected String suffix;
+	protected String sliceId;
 	protected Map<String, String> extraInfo = new HashMap<>();
 	protected int weight;
 	protected Status status;
@@ -18,11 +18,11 @@ public abstract class Slice {
 	public Slice() {
 	}
 
-	public Slice(String id, String suffix, Map<String, String> extraInfo,
+	public Slice(String id, String sliceId, Map<String, String> extraInfo,
 			int weight, Status status, boolean isPhysical) {
 		super();
 		this.id = id;
-		this.suffix = suffix;
+		this.sliceId = sliceId;
 		this.extraInfo = extraInfo;
 		this.weight = weight;
 		this.status = status;
@@ -41,18 +41,18 @@ public abstract class Slice {
 		this.id = id;
 	}
 
-	public String getSuffix() {
-		return suffix;
+	public String getSliceId() {
+		return sliceId;
 	}
 
-	public void setSuffix(String suffix) {
+	public void setSliceId(String sliceId) {
 
-		this.suffix = suffix;
+		this.sliceId = sliceId;
 	}
 
-	public void installSuffix(String suffix) {
-		if (this.suffix == null) {
-			this.suffix = suffix;
+	public void installSliceId(String sliceId) {
+		if (this.sliceId == null) {
+			this.sliceId = sliceId;
 		}
 	}
 
@@ -101,7 +101,7 @@ public abstract class Slice {
 
 	@Override
 	public String toString() {
-		return "Slice [id=" + id + ", suffix=" + suffix + ", extraInfo="
+		return "Slice [id=" + id + ", sliceId=" + sliceId + ", extraInfo="
 				+ extraInfo + ", weight=" + weight + ", status=" + status
 				+ ", isPhysical=" + isPhysical + ", function=" + function + "]";
 	}
